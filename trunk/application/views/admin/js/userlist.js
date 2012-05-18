@@ -20,6 +20,7 @@
 		$(this).attr('disabled','disabled');
 	});
 	$('#saved').click(function(){
-		$('#frm1').attr('action','/addusersimpan');
+		$('#frm1').attr('action','addusersimpan');
+		document.frm1.submit();
 	})
 });
