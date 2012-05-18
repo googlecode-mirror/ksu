@@ -1,0 +1,74 @@
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
+
+ERROR - 2012-04-18 00:00:12 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\master\md_customer.php 14
+ERROR - 2012-04-18 00:00:52 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\master\md_customer.php 14
+ERROR - 2012-04-18 00:02:27 --> Query error: Duplicate entry '20120418-0001' for key 'PRIMARY'
+ERROR - 2012-04-18 00:03:16 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\master\md_customer.php 14
+ERROR - 2012-04-18 00:04:00 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\master\md_customer.php 14
+ERROR - 2012-04-18 00:04:05 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\master\md_customer.php 14
+ERROR - 2012-04-18 00:04:16 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\master\md_client.php 6
+ERROR - 2012-04-18 00:04:18 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\master\md_customer.php 14
+ERROR - 2012-04-18 00:04:23 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_masuk.php 1
+ERROR - 2012-04-18 00:08:19 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_masuk.php 7
+ERROR - 2012-04-18 00:21:52 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_masuk.php 13
+ERROR - 2012-04-18 00:22:32 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_masuk.php 13
+ERROR - 2012-04-18 00:24:10 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_masuk.php 17
+ERROR - 2012-04-18 00:24:27 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_masuk.php 17
+ERROR - 2012-04-18 00:26:05 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_masuk.php 17
+ERROR - 2012-04-18 00:28:44 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_masuk.php 17
+ERROR - 2012-04-18 00:31:52 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_masuk.php 27
+ERROR - 2012-04-18 00:32:26 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_masuk.php 28
+ERROR - 2012-04-18 00:33:02 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_masuk.php 28
+ERROR - 2012-04-18 00:33:24 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\master\md_client.php 6
+ERROR - 2012-04-18 00:36:12 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\master\md_client.php 14
+ERROR - 2012-04-18 00:39:20 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\master\md_client.php 14
+ERROR - 2012-04-18 00:39:20 --> Severity: Notice  --> Undefined offset: 1 D:\inetpub\wwwroot\sumberurip\system\libraries\zetro_frmBuilder.php 25
+ERROR - 2012-04-18 00:39:45 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\master\md_client.php 14
+ERROR - 2012-04-18 00:40:10 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\master\md_client.php 14
+ERROR - 2012-04-18 00:40:28 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\master\md_client.php 14
+ERROR - 2012-04-18 00:41:08 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\master\md_client.php 14
+ERROR - 2012-04-18 00:41:38 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_masuk.php 28
+ERROR - 2012-04-18 00:42:27 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_process.php 1
+ERROR - 2012-04-18 00:42:36 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_masuk.php 28
+ERROR - 2012-04-18 00:48:31 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_masuk.php 28
+ERROR - 2012-04-18 00:48:45 --> Severity: Notice  --> Undefined property: Transaksi::$zz D:\inetpub\wwwroot\sumberurip\application\controllers\transaksi.php 35
+ERROR - 2012-04-18 00:49:43 --> Query error: Incorrect date value: '17/04/2012' for column 'tgldo' at row 1
+ERROR - 2012-04-18 00:57:30 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_masuk.php 28
+ERROR - 2012-04-18 00:57:46 --> Query error: Incorrect date value: '17/04/2012' for column 'tgldo' at row 1
+ERROR - 2012-04-18 00:58:14 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_masuk.php 28
+ERROR - 2012-04-18 00:58:23 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_masuk.php 28
+ERROR - 2012-04-18 00:59:01 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_masuk.php 28
+ERROR - 2012-04-18 00:59:37 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_masuk.php 28
+ERROR - 2012-04-18 01:00:30 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_masuk.php 28
+ERROR - 2012-04-18 01:00:36 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_masuk.php 28
+ERROR - 2012-04-18 01:05:01 --> Query error: Duplicate entry '1204201110' for key 'PRIMARY'
+ERROR - 2012-04-18 01:05:19 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_masuk.php 28
+ERROR - 2012-04-18 01:05:37 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_process.php 1
+ERROR - 2012-04-18 01:12:14 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_masuk.php 28
+ERROR - 2012-04-18 01:12:40 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_masuk.php 28
+ERROR - 2012-04-18 01:14:27 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_masuk.php 28
+ERROR - 2012-04-18 01:14:29 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_process.php 1
+ERROR - 2012-04-18 01:16:57 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\master\md_pool.php 6
+ERROR - 2012-04-18 01:21:13 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\master\md_pool.php 6
+ERROR - 2012-04-18 01:22:11 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_process.php 8
+ERROR - 2012-04-18 01:23:31 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_process.php 8
+ERROR - 2012-04-18 01:24:35 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_process.php 9
+ERROR - 2012-04-18 01:24:57 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_process.php 9
+ERROR - 2012-04-18 01:25:05 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\master\md_pool.php 6
+ERROR - 2012-04-18 01:26:40 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\master\md_pool.php 14
+ERROR - 2012-04-18 01:26:57 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\master\md_pool.php 14
+ERROR - 2012-04-18 01:27:03 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_process.php 9
+ERROR - 2012-04-18 10:00:15 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_masuk.php 28
+ERROR - 2012-04-18 10:00:18 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_process.php 9
+ERROR - 2012-04-18 10:01:03 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\DO_terima.php 7
+ERROR - 2012-04-18 10:01:10 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\transaksi\do_keluar.php 1
+ERROR - 2012-04-18 10:01:14 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\master\md_customer.php 14
+ERROR - 2012-04-18 10:01:16 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\master\md_client.php 14
+ERROR - 2012-04-18 10:01:19 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\master\md_pool.php 14
+ERROR - 2012-04-18 10:01:34 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\sdm\sdm_biodata.php 7
+ERROR - 2012-04-18 10:01:38 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\master\md_sdm_bag.php 6
+ERROR - 2012-04-18 10:01:40 --> 404 Page Not Found --> master/md_stat_tunjangan
+ERROR - 2012-04-18 10:01:48 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\master\md_jkend.php 7
+ERROR - 2012-04-18 10:01:52 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\master\md_keuangan_mkas.php 7
+ERROR - 2012-04-18 10:01:54 --> Severity: Notice  --> Undefined index: prs D:\inetpub\wwwroot\sumberurip\application\views\master\setup_kas_awal.php 7
+ERROR - 2012-04-18 10:01:57 --> 404 Page Not Found --> master/md_tarif

@@ -1,0 +1,5 @@
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
+
+ERROR - 2012-05-06 21:50:32 --> Severity: Warning  --> date(): It is not safe to rely on the system's timezone settings. You are *required* to use the date.timezone setting or the date_default_timezone_set() function. In case you used any of those methods and you are still getting this warning, you most likely misspelled the timezone identifier. We selected 'America/Los_Angeles' for '-7.0/DST' instead D:\inetpub\wwwroot\sumberurip\system\libraries\Log.php 86
+ERROR - 2012-05-06 21:50:32 --> Severity: Warning  --> date(): It is not safe to rely on the system's timezone settings. You are *required* to use the date.timezone setting or the date_default_timezone_set() function. In case you used any of those methods and you are still getting this warning, you most likely misspelled the timezone identifier. We selected 'America/Los_Angeles' for '-7.0/DST' instead D:\inetpub\wwwroot\sumberurip\system\libraries\Log.php 99
+ERROR - 2012-05-06 21:50:32 --> Unable to select database: sumberurip

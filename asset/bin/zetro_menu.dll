@@ -1,0 +1,42 @@
+[Menu Utama]
+1|Home|
+2|SPB|
+3|Nasabah|
+4|Lelang|
+5|Laporan|
+6|Master|
+7|About|
+	
+	[About]
+	1|Info|about
+	
+	[Home]
+	1|Profile|
+	2|Ganti Password|change_password|
+	3|Log Out|logout|
+	
+	[SPB]
+	1|SPB Baru|spb/index|
+	2|List SPB|spb/daftar|
+	3|Perpanjangan|spb/perpanjang
+	
+	[Nasabah]
+	1|Profile|client/profile|
+	2|List Nasabah|client/daftar
+	3|Back List|client/backlist
+	
+	[Lelang]
+	1|Daftar Lelang|lelang/list|
+	
+	[Laporan]
+	1|SPB|laporan/spb|
+	2|Nasabah|laporan/nasabah|
+	3|Jenis Barang|laporan/material|
+	4|Lelang|laporan/lelang|
+	
+	[Master]
+	1|System Setup|master/config|
+	2|Group Barang|master/group_mt|
+	3|Jenis Barang|master/jenis_mt|
+	4|User Account|userlist|
+	

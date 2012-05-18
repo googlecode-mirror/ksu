@@ -1,0 +1,27 @@
+[Server]
+hostname|localhost
+username|root
+password|
+dbname|ksudb
+
+[WebPage]
+Title|KSU PURNAMA KARYA
+subtitle| Koperasi Serba Usaha
+
+[Path]
+z_menu|asset/bin/zetro_menu.dll
+z_config|asset/bin/zetro_config.dll
+z_table|asset/bin/zetro_table.cfg
+z_form|asset/bin/form.cfg
+localhost|http://localhost/ksu
+
+[InfoCo]
+Name|KSU PURNAMA KARYA
+Address|Jl. Ipik Gandamanah No. 88 RT.03/06 Depan Perumahan Puskopad
+Kota|Purwakarta
+Telp|Telp :(0264) 214213 HP: 0878 7990 5074
+Fax |Fax :
+Akta Pendirian No. |518/28
+SIUP No.|521/10-10/PK/VIII/06
+Domisili No.|503/65/VIII/Ekbang
+TDP No.|100926500352
