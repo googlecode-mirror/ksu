@@ -36,6 +36,7 @@ $(document).ready(function(e) {
 echo "<form id='frm1' name='frm1' action='' method='post'>";
 $zb=new zetro_frmBuilder('asset/bin/form.cfg');
 $zb->BuildForm('Adduser',true,'80%');
+echo "</form>";
 ?>
 </span>
 <span id='v_list' style='display:block'><br />
@@ -45,13 +46,13 @@ $zb->ListHeader('Adduser','100%');
 $no=0;//($page+1);
 	foreach ($userlst->result_array() as $lst){
 		$no++;
-		echo "<tr class='xx' align='center'>
+		echo "<tr class='xx' align='center' id='n-".$lst['userid']."'>
 			 <td class='kotak'>$no</td>
 			 <td class='kotak'>".$lst['userid']."</td>
 			 <td class='kotak' align='left'>".$lst['username']."</td>
 			 <td class='kotak' >".rdb("user_level","nmlevel","","where idlevel='".$lst['levelid']."'")."</td>
 			 <td class='kotak' width='10%'>";
-			 $zb->event($no);
+			 $zb->event($lst['userid']);
 			echo "<td></tr>";
 			 $no++;
 	}

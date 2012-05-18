@@ -18,18 +18,22 @@ class Admin extends CI_Controller {
 		$data['userid']=$this->input->post("userid");
 		$data['username']=$this->input->post("username");
 		$data['levelid']=$this->input->post("levelid");
-		$data['password']=$this->input->post("levelid");
-		if($this->Admin_model->user_exist($this->input->post("userid"))==''){
-		$this->Admin_model->simpan_data('users',$data);
+		$data['password']=md5($this->input->post("password"));
+		if($this->Admin_model->user_exists($this->input->post("userid"))==0){
+			$this->Admin_model->simpan_data('users',$data);
+			redirect('admin/userlist');
 		}else{
-			$this->load->view('admin/header');
-			$this->load->view('admin/userlist');
-			$this->load->view('admin/footer');
-		echo "<script language='javascript'>Alert('UserId Sudah ada'); window.history.back();</script>";
-			//$this->load->view('admin/header');
-			//$this->load->view('admin/userlist?prs');
-			//$this->load->view('admin/footer');
+		echo "<script language='javascript'>alert('UserId Sudah ada'); window.history.back();</script>";
 		}
+	}
+	function adduserupdate(){
+		$data=array();
+		$data['username']=$this->input->post("username");
+		$data['levelid']=$this->input->post("levelid");
+		
+			$this->Admin_model->update_table('users','userid',$this->input->post("userid"),$data);
+			redirect('admin/userlist');
+	
 	}
 	public function paginat($halaman,$tabel,$limit){
 		    $data=array();$config=array();
@@ -98,6 +102,20 @@ class Admin extends CI_Controller {
 			$this->load->view('admin/header');
 			$this->load->view('admin/change_password',$data);
 			$this->load->view('admin/footer');
+	}
+	function pwdupdate(){
+	  $data=array();
+	  $data['password']=md5($this->input->post("new_pass"));
+	  $pwd_old=$this->Admin_model->cek_pwd();
+	  if($pwd_old==md5($this->input->post("old_pass"))){
+			$this->Admin_model->update_table('users','userid',$this->session->userdata("userid"),$data);
+			echo "<script language='javascript'>alert('Password berhasil di ganti.\n Silahkan Login kembali');</script>";
+			redirect('admin/logout');
+		}else{
+			echo "Password\n";
+			echo "<script language='javascript'> alert('Password lama tidak cocok); window.history.back();</script>";
+		}
+	  	
 	}
     function dashboard() {
         $this->check_logged_in();

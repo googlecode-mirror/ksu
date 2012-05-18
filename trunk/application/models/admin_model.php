@@ -44,7 +44,7 @@ class Admin_model extends CI_Model
 	}
 	
 	function userlist($limit,$offset){
-		$this->db->where('levelid','<>1');
+		$this->db->where('levelid !=','0');
 		$this->db->select('*');
 		$this->db->order_by('userid');
 		$this->db->limit($limit,$offset);
@@ -63,8 +63,17 @@ class Admin_model extends CI_Model
 	}
 	function user_exists($uid=''){
 		($uid=='')?$uid=$this->session->userdata('userid'):$uid=$uid;
-		$q=$this->isi_list('users',"where userid='$uid'",'userid');
+		$this->db->where("userid",$uid);
+		$q=$this->db->count_all_results("users");
+		;
 		return $q;
+	}
+	function cek_pwd($uid=''){
+		($uid=='')?$uid=$this->session->userdata('userid'):$uid=$uid;
+		$q=$this->db->query("select password from users where userid='$uid'");
+		$row=$q->row();
+		$hasil=$row->password;
+		return $hasil;
 	}
 	function update_nomor($data){
 		$this->simpan_data('penomoran',$data);
@@ -90,9 +99,9 @@ class Admin_model extends CI_Model
 		$this->db->where($field,$isi);
 		$this->db->delete($tabel);	
 	}
-	function update_table($table,$field,$data,$where){
-	    $this->db->where($field,$data);
-		$q=$this->db->query("update $table set $field='$data' $where");
+	function update_table($table,$where,$field,$data){
+		$this->db->where($where, $field);
+		$q=$this->db->update($table, $data);
 		return $q;	
 	}
 	function tgl_to_mysql($tgl='',$delimiter='/'){

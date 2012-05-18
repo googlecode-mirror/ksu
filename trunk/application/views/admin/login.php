@@ -11,7 +11,7 @@
 		
 		
 		<p>
-			<label for="username">Username:</label>
+			<label for="username">User ID:</label>
 			<input type="text" name="username" size="20" class="form_field" value="<?php echo set_value('username');?>"/>			
 		</p>
 		
