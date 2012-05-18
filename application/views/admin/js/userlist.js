@@ -10,6 +10,10 @@
 			$('table#panel tr td:not(#'+id+')').addClass('j_panel');
 			$('span#v_'+id).show();
 			$('span:not(#v_'+id+')').hide();
+			if(id=='add'){
+				($('#saved').val()=='Simpan')?$('#saved').removeAttr('readonly'):'';
+			}
+			if(id=='list'){$('input:not(button)').val('');}
 			
 	})
 	$('#addlvl').click(function(){
@@ -20,7 +24,38 @@
 		$(this).attr('disabled','disabled');
 	});
 	$('#saved').click(function(){
-		$('#frm1').attr('action','addusersimpan');
+		var tp=$(this).val();
+		(tp=='Simpan')?
+		$('#frm1').attr('action','addusersimpan'):
+		$('#frm1').attr('action','adduserupdate');
 		document.frm1.submit();
 	})
+	
+	$('img').click(function(){
+		var id=$(this).attr('id');
+		var tp=$(this).attr('class');
+		switch(tp){
+			case 'edit':
+			$('#userid')
+				.val(id)
+				.attr('readonly','readonly')
+			$('#username')
+				.val(isi_tabel(id,'3'))
+				.focus().select();
+				
+			$('select#levelid option[text='+isi_tabel(id,'4')+']').select();
+			$('#saved').val('Update');
+			$('#password').attr('disabled','disabled');
+			$('table#panel tr td#add').click();
+			break;
+			case 'del':
+			break;	
+		}
+	})
+function isi_tabel(id,kol){
+	var isi=$('table#listTable tr#n-'+id+' td:nth-child('+kol+')').html();	
+	return isi;
+}
+
 });
+
