@@ -11,19 +11,19 @@
 	1|Info|about
 	
 	[Home]
-	1|Profile|
+	1|Profile|master/co_profile|
 	2|Ganti Password|change_password|
 	3|Log Out|logout|
 	
 	[SPB]
 	1|SPB Baru|spb/index|
 	2|List SPB|spb/daftar|
-	3|Perpanjangan|spb/perpanjang
+	3|Perpanjangan|spb/perpanjang|
 	
 	[Nasabah]
 	1|Profile|client/profile|
-	2|List Nasabah|client/daftar
-	3|Back List|client/backlist
+	2|List Nasabah|client/daftar|
+	3|Back List|client/backlist|
 	
 	[Lelang]
 	1|Daftar Lelang|lelang/list|

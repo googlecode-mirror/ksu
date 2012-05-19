@@ -4,6 +4,10 @@
 	function __construct(){
 			
 	}
+	function hapus_table($table,$where){
+		$sql="delete from $table $where";
+		mysql_query($sql) or die(mysql_error());	
+	}
 	function rdb($tabel,$rfield,$sfield='',$where='',$order='',$group=''){
 		$datadb="";
 		if($sfield==''){

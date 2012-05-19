@@ -10,11 +10,12 @@ class zetro_listBuilder{
 		$this->sql=$sql;
 		$this->con=$con;
 	}
-	function ListHeader($section,$width='100%',$tp='list'){
+	function ListHeader($section,$width='100%',$id='',$tp='list'){
 		$zm= new zetro_manager;
 		$this->tp=$tp;
 		$jml=$zm->Count($section,$this->path);
-		echo "<table id='listTable' style='border-collapse:collapse' width='$width'>
+		($id=='')?$jud='listTable':$jud=$id;
+		echo "<table id='$id' style='border-collapse:collapse' width='$width'>\n<thead>
 			  <tr align='center' class='header'>\n\r
 			  <th id='c0' width='4%' class='kotak'>No.</th>\n\r";
 			  for($i=1;$i<=$jml;$i++){
@@ -24,7 +25,7 @@ class zetro_listBuilder{
 				  echo "<th id='c$i' $wd class='kotak' $st>".$fld[0]."</th>\n\r";
 			  }
 		echo ($this->tp=='list')? "<th id='c".($jml+1)."' width='5%' class='kotak'></th>\n\r</tr>\n\r":"</tr>";
-		
+		echo "</thead>";
 	}
 	function event($id,$menu='',$stat=''){
 		if($stat==''){

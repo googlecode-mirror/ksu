@@ -3,20 +3,22 @@ class Admin extends CI_Controller {
   public $tc;
   public $zn;
 	public $zc;
+	public $zm;
     function  __construct() {
         parent::__construct();
         $this->load->model('Admin_model');
 		$this->tc= new zetro_table_creator('asset/bin/zetro_table.cfg');
 		$this->zn= new zetro_manager();
 		$this->zc='asset/bin/zetro_config.dll';
+		$this->zm='asset/bin/zetro_menu.dll';
 	}
     function index() {
 		$this->cek_db_user();
 	}
 	function addusersimpan(){
 		$data=array();
-		$data['userid']=$this->input->post("userid");
-		$data['username']=$this->input->post("username");
+		$data['userid']=str_replace(' ','',$this->input->post("userid"));
+		$data['username']=str_replace("'","\'",$this->input->post("username"));
 		$data['levelid']=$this->input->post("levelid");
 		$data['password']=md5($this->input->post("password"));
 		if($this->Admin_model->user_exists($this->input->post("userid"))==0){
@@ -35,6 +37,16 @@ class Admin extends CI_Controller {
 			redirect('admin/userlist');
 	
 	}
+	 public function delete_user(){
+		 $user=trim($_POST['userid']);
+		 $this->Admin_model->hapus_table('users','userid',$user);
+		 echo $user;
+	 }
+	 public function delete_level(){
+		 $user=trim($_POST['idlevel']);
+		 $this->Admin_model->hapus_table('user_level','idlevel',$user);
+		 echo $user;
+	 }
 	public function paginat($halaman,$tabel,$limit){
 		    $data=array();$config=array();
 			$page=$this->uri->segment(3);
@@ -52,14 +64,17 @@ class Admin extends CI_Controller {
 			$data["page"] = $page;
 	}
 	function userlist(){
-		$data=$this->cek_auth();
-		$limit=10;
+		$this->nama_file('userlist');
+		//$data=$this->cek_auth();
+		$limit=100;
 		$this->paginat('userlist','users',$limit);
 		//(!$page)? $offset=0:$offset=$page;
 		$offset=0;
 		$data['userlst']=$this->Admin_model->userlist($limit,$offset);
 				$this->load->view('admin/header');
-				$this->load->view('admin/userlist',$data);
+				($this->auth_all($this->menu)==true)?
+				$this->load->view('admin/userlist',$data):
+				$this->load->view("admin/no_authorisation");
 				$this->load->view('admin/footer');
 	}
 	//fungsi setup master pendapatan
@@ -165,12 +180,15 @@ class Admin extends CI_Controller {
 	}
 	public function auth_all($section){
 		$data['oto']=$this->Admin_model->cek_Auth($section);
-		if(count($data['oto'])>0){
-		if($data['oto']['c']=='Y' ||
-			$data['oto']['e']=='Y'||
-			$data['oto']['v']=='Y'||
-			$data['oto']['p']=='Y'){ return true;}else{return false;}
-		}
+		print_r($data);
+		if(count($data['oto'])>0 ){
+			if($this->session->userdata('userid')!='Superuser'){
+				if($data['oto']['c']=='Y' ||
+					$data['oto']['e']=='Y'||
+					$data['oto']['v']=='Y'||
+					$data['oto']['p']=='Y'){ return true;}else{return false;}
+				}
+			}else{ return true;}
 	}
 	public function penomoran(){
 	//$data=array();
@@ -282,7 +300,7 @@ class Admin extends CI_Controller {
 		$data=array();
 		if($this->session->userdata('login')==true){
 			$this->Admin_model->create_useroto();
-			if ($this->session->userdata('levelid')!='0'){
+			if ($this->session->userdata('levelid')!='1'){
 				$data['oto']=$this->Admin_model->cek_Auth();
 				/*print_r($data['oto']);
 				if($data_auth['userid']!=''){
@@ -314,11 +332,11 @@ class Admin extends CI_Controller {
             $data['userid'] = $this->input->post('username');
 			$data['username']=$this->input->post('username');
             $data['password'] = md5( $this->input->post('password'));
-			$data['levelid']='0';
+			$data['levelid']='1';
 			$this->Admin_model->simpan_data('users',$data);
 			$this->Admin_model->user_level();
-			$lvl["idlevel"]="0";
-			$lvl["nmlevel"]="Super user";
+			//$lvl["idlevel"]="1";
+			$lvl["nmlevel"]="Super User";
 			$this->Admin_model->simpan_data('user_level',$lvl);
 			redirect ('Admin/index');
 		}else{
@@ -326,9 +344,83 @@ class Admin extends CI_Controller {
 		}
 	}
 	function useroto(){
-			$this->load->view('master/header');
-			$this->load->view('admin/useroto');
-			$this->load->view('master/footer');
+		$userid=$_POST['oto_usernm'];
+		$jml_menu=$this->zn->Count("Menu Utama",$this->zm);
+		for ($i=1;$i<=$jml_menu;$i++){
+			$mnu=explode('|',$this->zn->rContent("Menu Utama","$i",$this->zm));
+			echo "<tr class='xx list_genap' id='".$mnu[0]."'>\n
+				  <td class='kotak' align='center'>$i</td>\n
+				  <td class='kotak' colspan='6'>".str_repeat('&nbsp;',3).$mnu[0]."</td>\n
+				  </tr>\n";
+				  $sub_menu=$this->zn->Count($mnu[0],$this->zm);
+				  for ($sm=1;$sm<=$sub_menu;$sm++){
+					$sbm=explode('|',$this->zn->rContent($mnu[0],"$sm",$this->zm));
+					$sbmm=explode('/',$sbm[1]);
+					(count($sbmm)==1)?$xx=0:$xx=1;
+					$c=$this->Admin_model->cek_oto($sbmm[$xx],'c',$userid);
+					$e=$this->Admin_model->cek_oto($sbmm[$xx],'e',$userid);
+					$v=$this->Admin_model->cek_oto($sbmm[$xx],'v',$userid);
+					$p=$this->Admin_model->cek_oto($sbmm[$xx],'p',$userid);
+					$d=$this->Admin_model->cek_oto($sbmm[$xx],'d',$userid);
+					($c=='Y')? $c_ck="checked='checked'":$c_ck='';
+					($e=='Y')? $e_ck="checked='checked'":$e_ck='';
+					($v=='Y')? $v_ck="checked='checked'":$v_ck='';
+					($p=='Y')? $p_ck="checked='checked'":$p_ck='';
+					($d=='Y')? $d_ck="checked='checked'":$d_ck='';
+					echo "<tr class='xx'>\n
+						  <td class='kotak'>&nbsp;</td>\n
+						  <td class='kotak'>".str_repeat('&nbsp;',7).$sbm[0]."</td>\n
+						  <td class='kotak' align='center'><input type='checkbox' id='c-".$sbmm[$xx]."' $c_ck ></td>\n
+						  <td class='kotak' align='center'><input type='checkbox' id='e-".$sbmm[$xx]."' $e_ck ></td>\n
+						  <td class='kotak' align='center'><input type='checkbox' id='v-".$sbmm[$xx]."' $v_ck ></td>\n
+						  <td class='kotak' align='center'><input type='checkbox' id='p-".$sbmm[$xx]."' $p_ck ></td>\n
+						  <td class='kotak' align='center'><input type='checkbox' id='d-".$sbmm[$xx]."' $d_ck ></td>\n
+						  </tr>\n";
+				  }
+		}
+	}
+	function useroto_update(){
+		$data=array();
+		$field=$_POST['idfld'];
+		$status=$_POST['stat'];
+		($status=='true')?$sts='Y':$sts='N';
+		$idmenu=$_POST['idmenu'];
+		$uid=$_POST['userid'];
+		$data['userid']=$_POST['userid'];
+		$data['idmenu']=$_POST['idmenu'];
+		$data[$field]=$sts;
+		$cekk=$this->Admin_model->field_exists('useroto',"where idmenu='$idmenu' and userid='$uid'","idmenu");
+		($cekk!='')?
+		$this->Admin_model->upd_data('useroto',"set $field='$sts'","where idmenu='$idmenu' and userid='$uid'"):
+		$this->Admin_model->simpan_data('useroto',$data);	
+	}
+	
+	function showlevel(){
+		$data=array();$datax=array();$n=1;
+		$hasil=$this->Admin_model->show_list('user_level',"where idlevel!='1'");
+		foreach ($hasil->result_array() as $rw){
+		echo "<tr class='xx' id='".$rw['idlevel']."'>\n
+				<td class='kotak' align='center' >$n</td>\n
+				<td class='kotak' title='Click for select' id='pilih' abbr='a-".$rw['idlevel']."'>".$rw['nmlevel']."</td>\n
+				<td class='kotak xy' align='center' abbr='".$rw['idlevel']."' id='hps' title='click for delete'><b>X</b></td>\n
+				</tr>\n";
+			$n++;
+		}
+	}
+
+	function userlevel(){
+		$data=array();$datax=array();$n=0;
+		$datax['nmlevel']=ucwords($_POST['nmlevel']);
+		$this->Admin_model->simpan_data('user_level',$datax);
+		$hasil=$this->Admin_model->show_list('user_level',"where idlevel!='1'");
+		foreach ($hasil->result_array() as $rw){
+			$n++;
+		echo "<tr class='xx' id='".$rw['idlevel']."'>\n
+				<td class='kotak' align='center' >$n</td>\n
+				<td class='kotak' title='Click for select' id='pilih' abbr='a-".$rw['idlevel']."'>".$rw['nmlevel']."</td>\n
+				<td class='kotak xy' align='center' abbr='".$rw['idlevel']."' id='hps' title='click for delete'><b>X</b></td>\n
+				</tr>\n";
+		}
 	}
 }
 ?>

@@ -14,8 +14,8 @@
 		
 		
 		<p>
-			<label for="username">Username:</label>
-			<input type="text" name="username" size="20" class="form_field" value="Administrator" readonly/>			
+			<label for="username">User ID:</label>
+			<input type="text" name="username" size="20" class="form_field" value="Superuser" readonly/>			
 		</p>
 		
 		<p>
@@ -24,7 +24,7 @@
 		</p>
 		
 		<p>
-			<input type="submit" name="submit" id="submit" style="width:auto" value="Create User Admin" />
+			<input type="submit" name="submit" id="submit" style="width:auto" value="Create Super User" />
 		</p>
 	</form>
 		<?php 
