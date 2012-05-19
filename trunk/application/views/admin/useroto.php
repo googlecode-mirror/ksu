@@ -1,11 +1,11 @@
 <div class='contents'>
-<div class="j_panel judul">User List</div>
+<div class="j_panel judul">Hak Akses</div>
 <div class="pn_content">
 <hr>
-<? /*
+<? 
 $zb=new zetro_listBuilder('asset/bin/form.cfg');
-$zb->ListHeader('Adduser','100%');
-$no=0;//($page+1);
+$zb->ListHeader('useroto','100%');
+/*$no=0;//($page+1);
 	foreach ($userlst->result_array() as $lst){
 		$no++;
 		echo "<tr class='xx' align='center'>

@@ -25,7 +25,8 @@ html, body { height:98%;}
 		.border_l{border-left:1.5px inset #EEE;}
 		.border_r{border-right:1.5px inset #EEE;}
 		.xx:hover {cursor:pointer; background:#99FF99;}
-		
+		.xy:hover {cursor:pointer; background:#F30;}
+		.list_genap{ background-color:#6699FF;}
 		.pn_content { background:#DDDDDD;
 					  width:99%;
 					  height:450px;
@@ -41,7 +42,7 @@ html, body { height:98%;}
 						height:32px;
 						padding-left:10px;
 						padding-top:5px;
-						font-size:large;
+						font-size:medium;
 						cursor:pointer;
 						}
 		.j_panel:hover{ background:url(../images/tab2.png) no-repeat;
@@ -49,6 +50,7 @@ html, body { height:98%;}
 		}
 		.j_panel2{ background:url(../images/tab2.png) no-repeat;
 						cursor:pointer;
+						font-size:medium;
 		}
 		
 .panel {		position:fixed;

@@ -23,31 +23,33 @@ class Admin_model extends CI_Model
 	function Auth($menu,$type_auth='d',$userid=''){
 		//type_auth=d for full Authorisation;
 		($userid=='')? $userid=$this->session->userdata('userid'):$userid=$userid;
-		$this->db->select($type_auth);
-		$this->db->where('userid',$userid);
-		$this->db->where('idmenu',$menu);
-		$query=$this->db->get('useroto');
-			return $query;//->row_array();
+		if($uid!='Superuser'){
+			$this->db->select($type_auth);
+			$this->db->where('userid',$userid);
+			$this->db->where('idmenu',$menu);
+			$query=$this->db->get('useroto');
+				return $query;//->row_array();
+		}
 	}
 	function cek_Auth($idmenu='',$userid=''){
 		//type_auth=d for full Authorisation;
 		($userid=='')? $userid=$this->session->userdata('userid'):$userid=$userid;
-		$this->db->select('*');
-		$this->db->where('userid',$userid);
-		if($idmenu!=''){
-		$this->db->where('idmenu',$idmenu);
-		}
-		$query=$this->db->get('useroto');
-		if ($this->session->userdata('levelid')!=0){
-			return $query->row_array();
-		}
+			$this->db->select('*');
+			$this->db->where('userid',$userid);
+			if($idmenu!=''){
+			$this->db->where('idmenu',$idmenu);
+			}
+			$query=$this->db->get('useroto');
+			if ($this->session->userdata('levelid')!=1){
+				return $query->row_array();
+			}
 	}
 	
 	function userlist($limit,$offset){
-		$this->db->where('levelid !=','0');
+		$this->db->where('levelid !=','1');
 		$this->db->select('*');
 		$this->db->order_by('userid');
-		$this->db->limit($limit,$offset);
+		//$this->db->limit($limit,$offset);
 		$query=$this->db->get('users');
 		return $query;
 	}
@@ -68,11 +70,28 @@ class Admin_model extends CI_Model
 		;
 		return $q;
 	}
+	function field_exists($table,$where='',$field='*'){
+		$q=$this->db->query("select $field from $table $where");
+		if ($q->num_rows() > 0) {
+			$row=$q->row();
+			$hasil=$row->$field;
+		}else{ $hasil='';}
+		return $hasil;
+	}
 	function cek_pwd($uid=''){
 		($uid=='')?$uid=$this->session->userdata('userid'):$uid=$uid;
 		$q=$this->db->query("select password from users where userid='$uid'");
 		$row=$q->row();
 		$hasil=$row->password;
+		return $hasil;
+	}
+	function cek_oto($menu,$fields,$uid=''){
+		($uid=='')?$uid=$this->session->userdata('userid'):$uid=$uid;
+		$q=$this->db->query("select $fields from useroto where idmenu='$menu' and userid='$uid'");
+		if ($q->num_rows() > 0) {
+			$row=$q->row();
+			$hasil=$row->$fields;
+		}else{ $hasil='';}
 		return $hasil;
 	}
 	function update_nomor($data){
@@ -126,12 +145,17 @@ class Admin_model extends CI_Model
 	}
 	function user_level(){
 		$sql="CREATE TABLE IF NOT EXISTS `user_level`(
-			`idlevel` VARCHAR(50) NULL DEFAULT NULL,
+			`idlevel` INT(50) NOT NULL AUTO_INCREMENT,
 			`nmlevel` VARCHAR(150) NULL DEFAULT NULL,
 			PRIMARY KEY (`idlevel`))
 		COLLATE='latin1_swedish_ci'
 		ENGINE=MyISAM;";	
 		mysql_query($sql) or die(mysql_error());
+	}
+	
+	function upd_data($table,$field,$where){
+		$q="update $table $field $where";
+			mysql_query($q) or die(mysql_error());
 	}
 }
 
