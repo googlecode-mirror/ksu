@@ -29,6 +29,9 @@
 				($('#saved').val()=='Submit')?$('#userid').removeAttr('readonly'):'';
 				$('#password').removeAttr('disabled');
 			}
+			if(id=='hak'){
+			$('#oto_usernm').change();
+			}
 			
 	})
 	$('#addlvl').click(function(){
@@ -43,6 +46,7 @@
 				$('table#lvltbl tbody').append(result);	
 	  })
 	  $('#lvladd').show('slow');
+	  $('div#lock').show();
 
 	});
 	$('#saved').click(function(){
@@ -87,6 +91,7 @@
 	})
 	$('#close').click(function(){
 		$('#lvladd').hide('slow');
+		$('div#lock').hide();
 	})
 	$('#tambah').click(function(){
 		var nmlevel=$('#nmlevel').val();

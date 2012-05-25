@@ -20,30 +20,6 @@ class Admin_model extends CI_Model
             return $query->row_array();
         }
     }
-	function Auth($menu,$type_auth='d',$userid=''){
-		//type_auth=d for full Authorisation;
-		($userid=='')? $userid=$this->session->userdata('userid'):$userid=$userid;
-		if($uid!='Superuser'){
-			$this->db->select($type_auth);
-			$this->db->where('userid',$userid);
-			$this->db->where('idmenu',$menu);
-			$query=$this->db->get('useroto');
-				return $query;//->row_array();
-		}
-	}
-	function cek_Auth($idmenu='',$userid=''){
-		//type_auth=d for full Authorisation;
-		($userid=='')? $userid=$this->session->userdata('userid'):$userid=$userid;
-			$this->db->select('*');
-			$this->db->where('userid',$userid);
-			if($idmenu!=''){
-			$this->db->where('idmenu',$idmenu);
-			}
-			$query=$this->db->get('useroto');
-			if ($this->session->userdata('levelid')!=1){
-				return $query->row_array();
-			}
-	}
 	
 	function userlist($limit,$offset){
 		$this->db->where('levelid !=','1');
@@ -58,10 +34,35 @@ class Admin_model extends CI_Model
 		$query=$this->db->count_all_results($tabel);
 		return $query;	
 	}
-	public function penomoran(){
-	 $this->db->order_by('nomor','desc');
-	 $query=$this->db->get('penomoran');
-	  return $query->row_array();
+	function show_single_field($table,$field='*',$where){
+		$nom='';
+		$sql="select $field from $table $where";
+		//echo $sql;
+		$rs=mysql_query($sql) or die(mysql_error());
+		while($row=mysql_fetch_array($rs)){
+			$nom=$row[$field];	
+		}
+		return $nom;
+	}
+	public function penomoran($table='nomorspb',$field='no_spb',$where=''){
+		($where=='')?$where="order by no_spb desc limit 1":$where=$where;
+		$nom=$this->show_single_field($table,$field,$where);
+		if($nom >0 && $nom <10000){$nomor=$nom;}else{$nomor='';}
+		($nomor=='')?$nomor=1:$nomor=(int)$nomor+1;
+			if(strlen($nomor)==1){
+			$nomo='0000'.$nomor;
+			}else if(strlen($nomor)==2){
+				$nomo='000'.$nomor;
+			}else if(strlen($nomor)==3){
+				$nomo='00'.$nomor;
+			}else if(strlen($nomor)==4){
+				$nomo='0'.$nomor;
+			}else{
+				$nomo=$nomor;
+			}
+			//$nom=date('Ymd').'-'.$nomo;
+			return $nomo;
+
 	}
 	function user_exists($uid=''){
 		($uid=='')?$uid=$this->session->userdata('userid'):$uid=$uid;
@@ -86,6 +87,7 @@ class Admin_model extends CI_Model
 		return $hasil;
 	}
 	function cek_oto($menu,$fields,$uid=''){
+		check_logged_in($this->session->userdata('userid'));
 		($uid=='')?$uid=$this->session->userdata('userid'):$uid=$uid;
 		$q=$this->db->query("select $fields from useroto where idmenu='$menu' and userid='$uid'");
 		if ($q->num_rows() > 0) {
@@ -94,8 +96,37 @@ class Admin_model extends CI_Model
 		}else{ $hasil='';}
 		return $hasil;
 	}
-	function update_nomor($data){
-		$this->simpan_data('penomoran',$data);
+	function is_oto($menu,$field,$userid=''){
+		check_logged_in($this->session->userdata('userid'));
+		$oto='';
+		($userid=='')?$uid=$this->session->userdata('userid'):$uid=$userid;
+		$sql="select $field from useroto where idmenu='$menu' and userid='$uid'";	
+		//echo $sql;
+		$rs=mysql_query($sql) or die(mysql_error());
+		while ($row=mysql_fetch_array($rs)){
+			$oto=$row[$field];	
+		}
+		return $oto;
+	}
+	function is_oto_all($menu,$link_oto,$userid=''){
+		check_logged_in($this->session->userdata('userid'));
+		($userid=='')?$uid=$this->session->userdata('userid'):$uid=$userid;
+		if($uid=='Superuser'){
+			$link_oto;
+		}else{
+			if($this->is_oto($menu,'c',$uid)=='Y' ||
+			   $this->is_oto($menu,'e',$uid)=='Y' ||
+			   $this->is_oto($menu,'v',$uid)=='Y' ||
+			   $this->is_oto($menu,'p',$uid)=='Y' ||
+			   $this->is_oto($menu,'d',$uid)=='Y' ){
+				   $link_oto;
+			   }else{
+				  $this->load->view("admin/no_authorisation");
+			   }
+		}
+	}
+	function update_nomor($data,$table='nomorspb'){
+		$this->simpan_data($table,$data);
 	}
 	function simpan_data($tabel,$tabeldata){
 		$simpan=$this->db->insert($tabel,$tabeldata);
@@ -156,6 +187,10 @@ class Admin_model extends CI_Model
 	function upd_data($table,$field,$where){
 		$q="update $table $field $where";
 			mysql_query($q) or die(mysql_error());
+	}
+	function find_match($str,$table='material',$field='nmbarang'){
+		$this->db->select($field." from ".$table." where ".$field." like '".$str."%' order by ".$field,FALSE);
+		return $this->db->get();
 	}
 }
 

@@ -3,6 +3,9 @@ class zetro_listBuilder{
 	public $path;
 	var $sql;
 	var $con;
+	public $data;
+	public $title;
+	
 	function zetro_listBuilder($path=''){
 		$this->path=$path;
 	}
@@ -24,7 +27,8 @@ class zetro_listBuilder{
 				  ($fld[6]=='')? $st="style='display:none'":$st='';
 				  echo "<th id='c$i' $wd class='kotak' $st>".$fld[0]."</th>\n\r";
 			  }
-		echo ($this->tp=='list')? "<th id='c".($jml+1)."' width='5%' class='kotak'></th>\n\r</tr>\n\r":"</tr>";
+		echo $this->data; 
+		echo ($this->tp=='list')? "<th id='c".($jml+1)."' width='' class='kotak'></th>\n\r</tr>\n\r":"</tr>";
 		echo "</thead>";
 	}
 	function event($id,$menu='',$stat=''){
@@ -42,7 +46,8 @@ class zetro_listBuilder{
 		$this->rs=mysql_query($this->sql,$this->con) or die(mysql_error());
 			while($row=mysql_fetch_array($this->rs)){
 				$n++;
-				echo "<tr align='center' class='xx'><td id='c00' class='kotak'>No.</td>";
+				echo "<tr align='center' class='xx'>\n
+				<td id='c00' class='kotak'>No.</td>";
 				  for($i=1;$i<=$jml;$i++){
 					  $fld=explode(',',$zm->rContent($section,$i,$this->path));
 					  echo "<td id='c$i$n' class='kotak'>".$row[$fld[3]]."</td>";
@@ -52,5 +57,22 @@ class zetro_listBuilder{
 		echo "</table>";
 		
 	}
+	function AddColom($n=1,$confirm=false,$title=false){
+		$this->data='';
+		$tt=explode(',',$this->title);
+		if($confirm==true){
+			for ($i=1;$i<=$n;$i++){
+			 ($title==true)?
+				$this->data="<td class='kotak'>".($title==false)? $i:$tt[$i]."</td>":
+				$this->data=$this->data."<th class='kotak'>$i</th>";
+			}
+			return $this->data;
+		}
+	}
+	function AddTitle($title=''){
+		$this->title=$title;
+		return $this->title;
+	}
+	
 }
 ?>

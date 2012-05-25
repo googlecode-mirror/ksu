@@ -1,5 +1,5 @@
 [Menu Utama]
-1|Home|
+1|Home|admin/index|
 2|SPB|
 3|Nasabah|
 4|Lelang|
@@ -11,25 +11,26 @@
 	1|Info|about
 	
 	[Home]
-	1|Profile|master/co_profile|
-	2|Ganti Password|change_password|
-	3|Log Out|logout|
+	1|Company Profile|master/co_profile|
+	2|Ganti Password|admin/change_password|
+	3|Log Out|admin/logout|
 	
 	[SPB]
 	1|SPB Baru|spb/index|
 	2|List SPB|spb/daftar|
 	3|Perpanjangan|spb/perpanjang|
+	4|Pelunasan|spb/lunas|
 	
 	[Nasabah]
-	1|Profile|client/profile|
-	2|List Nasabah|client/daftar|
-	3|Back List|client/backlist|
+	;1|Profile|client/profile|
+	1|List Nasabah|client/list_client|
+	2|Black List|client/blacklist|
 	
 	[Lelang]
-	1|Daftar Lelang|lelang/list|
+	1|Daftar Lelang|lelang/list_lelang|
 	
 	[Laporan]
-	1|SPB|laporan/spb|
+	1|SPB|laporan/lap_daftar|
 	2|Nasabah|laporan/nasabah|
 	3|Jenis Barang|laporan/material|
 	4|Lelang|laporan/lelang|
@@ -38,5 +39,9 @@
 	1|System Setup|master/config|
 	2|Group Barang|master/group_mt|
 	3|Jenis Barang|master/jenis_mt|
-	4|User Account|userlist|
+	4|User Account|admin/userlist|
 	
+	[User Account]
+	1|Add User|add|
+	2|User List|list|
+	3|Hak Akses|hak|

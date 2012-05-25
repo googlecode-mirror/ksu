@@ -64,7 +64,16 @@ class Admin extends CI_Controller {
 			$data["page"] = $page;
 	}
 	function userlist(){
+		$data=array();
 		$this->nama_file('userlist');
+		$data['ac']=$this->Admin_model->is_oto('add','c');
+		$data['ae']=$this->Admin_model->is_oto('add','e');
+		$data['le']=$this->Admin_model->is_oto('list','e');
+		$data['lv']=$this->Admin_model->is_oto('list','v');
+		$data['lp']=$this->Admin_model->is_oto('list','p');
+		$data['ld']=$this->Admin_model->is_oto('list','d');
+		$data['hc']=$this->Admin_model->is_oto('hak','c');
+		$data['hv']=$this->Admin_model->is_oto('hak','v');
 		//$data=$this->cek_auth();
 		$limit=100;
 		$this->paginat('userlist','users',$limit);
@@ -72,9 +81,7 @@ class Admin extends CI_Controller {
 		$offset=0;
 		$data['userlst']=$this->Admin_model->userlist($limit,$offset);
 				$this->load->view('admin/header');
-				($this->auth_all($this->menu)==true)?
-				$this->load->view('admin/userlist',$data):
-				$this->load->view("admin/no_authorisation");
+				$this->Admin_model->is_oto_all($this->menu,$this->load->view('admin/userlist',$data));
 				$this->load->view('admin/footer');
 	}
 	//fungsi setup master pendapatan
@@ -164,95 +171,7 @@ class Admin extends CI_Controller {
             return FALSE;
         }
     }
-	public function cek_auth($idmenu=''){
-		$data=array();
-		$data_auth=array();
-			$data_auth=$this->Admin_model->cek_Auth($idmenu);
-			//print_r( $data_auth);
-			if($data_auth['userid']!=''){
-			$data['idmenu']=$data_auth['idmenu'];
-			$data['create']=$data_auth['c'];
-			$data['edit']=$data_auth['e'];
-			$data['view']=$data_auth['v'];
-			$data['print']=$data_auth['p'];
-			$data['full']=$data_auth['d'];
-			}
-	}
-	public function auth_all($section){
-		$data['oto']=$this->Admin_model->cek_Auth($section);
-		print_r($data);
-		if(count($data['oto'])>0 ){
-			if($this->session->userdata('userid')!='Superuser'){
-				if($data['oto']['c']=='Y' ||
-					$data['oto']['e']=='Y'||
-					$data['oto']['v']=='Y'||
-					$data['oto']['p']=='Y'){ return true;}else{return false;}
-				}
-			}else{ return true;}
-	}
-	public function penomoran(){
-	//$data=array();
-	$datak=$this->Admin_model->penomoran();
-	if(count($datak)>0){$nomor=$datak['nomor'];}else{$nomor='';}
-	($nomor=='')?$nomor=1:$nomor=(int)$nomor+1;
-		if(strlen($nomor)==1){
-		$nomo='00'.$nomor;
-		}else if(strlen($nomor)==2){
-			$nomo='00'.$nomor;
-		}else{
-			$nomo=$nomor;
-		}
-		$nom=date('Ymd').'-'.$nomo;
-		return $nom;
-	}
-	public function hapus($section='setup_kredit',$key='id_dapat'){
-		$id='';
-		($this->uri->segment(4)==false)?$id=$this->uri->segment(3):$id=$this->uri->segment(4);
-		$data=array();
-			$this->Admin_model->hapus_table($section,$key,$id);	
-	}
 	
-	public function transaksi($limit=5){
-		$data=array();
-		//create table setup_kredit and jenis_trans
-		$this->tc->table_name($this->content);
-		$this->tc->section($this->content);
-		$this->tc->table_created();
-		($this->menu=='uang_masuk')?$jn='setup_kredit':$jn='setup_debit';
-			$data['oto']=$this->Admin_model->cek_Auth($this->content);
-			($this->grid==true)?$data['prs']='list':$data['prs']='';
-			$data['urutan']=$this->penomoran();
-			$data['asal']=$this->Admin_model->isi_list($jn);
-			$data['kasbank']=$this->Admin_model->isi_list('setup_bank');
-			$data['bln']=$this->Admin_model->isi_list($this->content,"order by month(tgl_trans)","distinct(month(tgl_trans))as bulan");
-			$data['thn']=$this->Admin_model->isi_list($this->content,"order by year(tgl_trans)","distinct(year(tgl_trans))as thn");
-			//pagination/*
-			$page=$this->uri->segment(3);
-			//$limit=5;
-			(!$page)? $offset=0:$offset=$page;
-		    $ttdata=$this->Admin_model->total_data($this->content,$this->jn_trans,$this->field);
-			$config['base_url'] = base_url() . "/index.php/admin/lap_".$this->menu."/";
-			$config['total_rows'] = $ttdata;
-			$config['per_page'] = $limit;
-			$config['uri_segment'] = 3;
-			$config['first_link'] = 'Fist';
-			$config['last_link'] = 'Last';
-			$config['next_link'] = 'Next';
-			$config['prev_link'] = 'Prev';
-			$this->pagination->initialize($config);
-			$data["paginator"]=$this->pagination->create_links();
-			$data["page"] = $page;
-			$data['blnselect']=$this->bulan;
-			$data['thnselect']=$this->tahun;
-			($this->jn_trans!='')?$jn="jn_trans='".$this->jn_trans."' and":$jn=""; 
-				$data['list']=$this->Admin_model->show_list($this->content,"where $jn month(tgl_trans)='".$this->bulan."' and year(tgl_trans)='".$this->tahun."' order by tgl_trans limit $offset,$limit");
-				$this->load->view('admin/header');
-				$this->load->view('support');
-				($this->auth_all($this->menu)==true)?
-                $this->load->view("admin/".$this->menu,$data):
-				$this->load->view("admin/no_authorisation");
-				$this->load->view('admin/footer');
-	}
 	function nama_file($menu){
 		$this->menu=$menu;
 	}
@@ -301,16 +220,7 @@ class Admin extends CI_Controller {
 		if($this->session->userdata('login')==true){
 			$this->Admin_model->create_useroto();
 			if ($this->session->userdata('levelid')!='1'){
-				$data['oto']=$this->Admin_model->cek_Auth();
-				/*print_r($data['oto']);
-				if($data_auth['userid']!=''){
-				$data['idmenu']=$data_auth['idmenu'];
-				$data['create']=$data_auth['c'];
-				$data['edit']=$data_auth['e'];
-				$data['view']=$data_auth['v'];
-				$data['print']=$data_auth['p'];
-				$data['full']=$data_auth['d'];
-				}*/
+				//$data['oto']=$this->Admin_model->cek_Auth();
 			}
 			$this->load->view('admin/header');
 			$this->load->view('admin/home');//$data);
@@ -344,6 +254,9 @@ class Admin extends CI_Controller {
 		}
 	}
 	function useroto(){
+		$cr=$this->Admin_model->is_oto('hak','c');
+		$vh=$this->Admin_model->is_oto('hak','v');
+		($cr=='Y' || $this->session->userdata("userid")=='Superuser')?$bisa='':$bisa='disabled';
 		$userid=$_POST['oto_usernm'];
 		$jml_menu=$this->zn->Count("Menu Utama",$this->zm);
 		for ($i=1;$i<=$jml_menu;$i++){
@@ -367,15 +280,32 @@ class Admin extends CI_Controller {
 					($v=='Y')? $v_ck="checked='checked'":$v_ck='';
 					($p=='Y')? $p_ck="checked='checked'":$p_ck='';
 					($d=='Y')? $d_ck="checked='checked'":$d_ck='';
-					echo "<tr class='xx'>\n
+					$sub_sub=$this->zn->Count($sbm[0],$this->zm);
+					echo($sub_sub >0)?
+						 "<tr class='xx'>\n
 						  <td class='kotak'>&nbsp;</td>\n
-						  <td class='kotak'>".str_repeat('&nbsp;',7).$sbm[0]."</td>\n
-						  <td class='kotak' align='center'><input type='checkbox' id='c-".$sbmm[$xx]."' $c_ck ></td>\n
-						  <td class='kotak' align='center'><input type='checkbox' id='e-".$sbmm[$xx]."' $e_ck ></td>\n
-						  <td class='kotak' align='center'><input type='checkbox' id='v-".$sbmm[$xx]."' $v_ck ></td>\n
-						  <td class='kotak' align='center'><input type='checkbox' id='p-".$sbmm[$xx]."' $p_ck ></td>\n
-						  <td class='kotak' align='center'><input type='checkbox' id='d-".$sbmm[$xx]."' $d_ck ></td>\n
+						  <td class='kotak' colspan='6'>".str_repeat('&nbsp;',7)."&bull;&nbsp;".$sbm[0]."</td>\n":
+						 "<tr class='xx'>\n
+						  <td class='kotak'>&nbsp;</td>\n
+						  <td class='kotak'>".str_repeat('&nbsp;',7)."&bull;&nbsp;".$sbm[0]."</td>\n
+						  <td class='kotak' align='center'><input type='checkbox' id='c-".$sbmm[$xx]."' $c_ck $bisa ></td>\n
+						  <td class='kotak' align='center'><input type='checkbox' id='e-".$sbmm[$xx]."' $e_ck $bisa  ></td>\n
+						  <td class='kotak' align='center'><input type='checkbox' id='v-".$sbmm[$xx]."' $v_ck $bisa  ></td>\n
+						  <td class='kotak' align='center'><input type='checkbox' id='p-".$sbmm[$xx]."' $p_ck $bisa  ></td>\n
+						  <td class='kotak' align='center'><input type='checkbox' id='d-".$sbmm[$xx]."' $d_ck $bisa  ></td>\n
 						  </tr>\n";
+						  for ($ss=1;$ss<=$sub_sub;$ss++){
+							$ssmn=explode('|',$this->zn->rContent($sbm[0],"$ss",$this->zm));
+							echo "<tr class='xx'>\n
+								  <td class='kotak'>&nbsp;</td>\n
+								  <td class='kotak'>".str_repeat('&nbsp;',12)."&rArr;&nbsp;".$ssmn[0]."</td>\n
+								  <td class='kotak' align='center'><input type='checkbox' id='c-".$ssmn[1]."' $c_ck $bisa  ></td>\n
+								  <td class='kotak' align='center'><input type='checkbox' id='e-".$ssmn[1]."' $e_ck $bisa  ></td>\n
+								  <td class='kotak' align='center'><input type='checkbox' id='v-".$ssmn[1]."' $v_ck $bisa  ></td>\n
+								  <td class='kotak' align='center'><input type='checkbox' id='p-".$ssmn[1]."' $p_ck $bisa  ></td>\n
+								  <td class='kotak' align='center'><input type='checkbox' id='d-".$ssmn[1]."' $d_ck $bisa  ></td>\n
+								  </tr>\n";
+						  }
 				  }
 		}
 	}

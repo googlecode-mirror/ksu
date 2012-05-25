@@ -1,10 +1,10 @@
 <div class='contents'>
-<div class="j_panel judul">Hak Akses</div>
+<div class="j_panel judul">Create SPB</div>
 <div class="pn_content">
 <hr>
 <? 
-$zb=new zetro_listBuilder('asset/bin/form.cfg');
-$zb->ListHeader('useroto','100%');
+$zb=new zetro_frmBuilder('asset/bin/zetro_form.cfg');
+$zb->BuildForm('Spb',true,'80%');
 /*$no=0;//($page+1);
 	foreach ($userlst->result_array() as $lst){
 		$no++;
