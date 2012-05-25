@@ -12,6 +12,7 @@ class zetro_table_creator{
 		$this->sec=$sec;	
 	}
 	function table_created(){
+		$sql='';$pri=1;
 		$zn= new zetro_manager();
 		$jml_field=$zn->Count($this->sec,$this->path);
 		$sql="CREATE TABLE IF NOT EXISTS `".$this->name."` (\n";
@@ -25,12 +26,22 @@ class zetro_table_creator{
 				$fld2=explode(",",$zn->rContent($this->sec,$z,$this->path));
 					if($fld2[1]=='P'){
 					$sql .="PRIMARY KEY (".$fld2[2].")\n";
+					$pri=1;
+					}else{
+					$pri=0;
 					}
 			}
-			$sql .=" )\n
-						COLLATE='latin1_swedish_ci'\n
-						ENGINE=MyISAM;";
-			return mysql_query($sql) or die($jml_field.$sql."<br/>".mysql_error());
+			//($pri==0)?$sql2=substr($sql,0,(strlen($sql)-14)):$sql2=$sql;
+			$sql .=" )\nCOLLATE='latin1_swedish_ci'\nENGINE=MyISAM;";
+			return mysql_query($sql) or die("<br>".$sql."<br/>".mysql_error());
 	}
 }
 ?>
+
+
+
+
+
+
+
+

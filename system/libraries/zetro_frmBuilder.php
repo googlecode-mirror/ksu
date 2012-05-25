@@ -2,18 +2,23 @@
 //class Name: formBuilder
 //version	: 1.2
 //Author	: Iswan Putera
-// function	: Build form automatic generate form and field from file config
+// function	: Build automatic generate form and field from file config
 
 class zetro_frmBuilder {
+	public $brs;
 	function zetro_frmBuilder($path=''){
 		$this->path=$path;
 	}
 	
-	function BuildForm($section,$button=false,$width='100%'){
+	function BuildForm($section,$button=false,$width='100%',$idTable=''){
 		$zm= new zetro_manager;
 		$jml=$zm->Count($section,$this->path);
+		($idTable!=='')?$idt=$idTable:$idt='fmrTable';
 		//echo "<form id='frm1' name='frm1' method='post' action=''>
-		echo "<table id='fmrTable' width='$width'>\n";
+		echo "<table id='".$idt."' width='$width'>\n";
+		// add baris kosong 
+		echo $this->brs;
+		
 		for ($i=1;$i<=$jml;$i++){
 			$fld=explode(',',$zm->rContent($section,$i,$this->path));
 			echo "<tr id='$i'>\n
@@ -55,7 +60,16 @@ class zetro_frmBuilder {
 	function BuildFormButton($value,$action='button',$buttonCount=2,$tableCol=3){
 		echo "<tr><td>&nbsp;</td>
 				<td><input type='$action' id='saved' value='$value'>
-					<input type='reset' id='batal' value='Cancel'></td></tr></table></form>";
+					<input type='reset' id='batal' value='Cancel'></td>
+				<td>&nbsp;</td></tr>\n";
+				echo $this->brs;
+                echo "</table></form>\n";
+	}
+	function AddBarisKosong($brs=false){
+		$this->dat='';
+		$this->brs=$brs;
+		if($this->brs==true){ $this->brs= "<tr><td colspan='3'>&nbsp;</td></tr>\n";}
+		return $this->brs;
 	}
 }
 ?>
