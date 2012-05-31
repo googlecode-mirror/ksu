@@ -195,14 +195,15 @@
 	}
 	
 	function getNextDays($fromdate,$countdays) {
+		$dated='';
 		$time = strtotime($fromdate); // 20091030
 		$day = 60*60*24;
 		for($i = 0; $i<$countdays; $i++)
 		{
 			$the_time = $time+($day*$i);
-			$date = date('Y-m-d',$the_time);
+			$dated = date('Y-m-d',$the_time);
 		}
-			return $date;
+			return $dated;
     }
 	
 	function  compare_date($date_1,$date_2){
@@ -228,7 +229,7 @@
 	   $bunga=($bunga*10/100);
 	   if($stat==''){
 		   if(compare_date($today,$bataslelang)==true && compare_date($today,$nextjtspb)==false){
-			    return "<img class='aksi' src='".base_url()."/asset/images/icon-25.gif' width='20' height='20' title='Klik untuk process' onclick=\"aksi_click('$no_spb','$pp_ke','$bunga')\";>";
+			    return "<img class='aksi' src='".base_url()."/asset/images/icon-25.gif' width='20' height='20' title='Klik untuk process perpanjang' onclick=\"aksi_click('$no_spb','$pp_ke','$bunga')\";>";
 		   }else{
 			  return (compare_date($nextjtspb2,$today)==false)?
 			  	 ($bayar==true && $bayare=='Y' || $pp_ke=='1')?

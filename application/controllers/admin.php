@@ -15,6 +15,11 @@ class Admin extends CI_Controller {
     function index() {
 		$this->cek_db_user();
 	}
+	function about(){
+			$this->load->view('admin/header');
+			$this->load->view('admin/about');
+			$this->load->view('admin/footer');
+	}
 	function addusersimpan(){
 		$data=array();
 		$data['userid']=str_replace(' ','',$this->input->post("userid"));

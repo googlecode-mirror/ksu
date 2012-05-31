@@ -10,7 +10,7 @@ class zetro_frmBuilder {
 		$this->path=$path;
 	}
 	
-	function BuildForm($section,$button=false,$width='100%',$idTable=''){
+	function BuildForm($section,$button=false,$width='100%',$idTable='',$buttonCount='2'){
 		$zm= new zetro_manager;
 		$jml=$zm->Count($section,$this->path);
 		($idTable!=='')?$idt=$idTable:$idt='fmrTable';
@@ -54,13 +54,13 @@ class zetro_frmBuilder {
 			echo "\n<td id='c3$i' width='8%'>&nbsp;</td>\n</tr>";
 		}
 		if($button==false){echo "</table></form>";}else{
-			if($fld[1]=='button'){$this->BuildFormButton($fld[5],$fld[4]);}
+			if($fld[1]=='button'){$this->BuildFormButton($fld[5],$fld[4],$buttonCount);}
 		}
 	}
 	function BuildFormButton($value,$action='button',$buttonCount=2,$tableCol=3){
 		echo "<tr><td>&nbsp;</td>
-				<td><input type='$action' id='saved' value='$value'>
-					<input type='reset' id='batal' value='Cancel'></td>
+				<td><input type='$action' id='saved' value='$value'>";
+				echo "<input type='reset' id='batal' value='Cancel'></td>
 				<td>&nbsp;</td></tr>\n";
 				echo $this->brs;
                 echo "</table></form>\n";
@@ -70,6 +70,10 @@ class zetro_frmBuilder {
 		$this->brs=$brs;
 		if($this->brs==true){ $this->brs= "<tr><td colspan='3'>&nbsp;</td></tr>\n";}
 		return $this->brs;
+	}
+	function AddButton($caption){
+			//$this->caption= "<input type='button' id='".str_replace(' ','',strtolower($caption))."' value='$caption'>";	
+		return $this->caption=$caption;
 	}
 }
 ?>

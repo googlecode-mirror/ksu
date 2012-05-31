@@ -8,12 +8,12 @@
 7|About|
 	
 	[About]
-	1|Info|about
+	1|Info|admin/about|
 	
 	[Home]
-	1|Company Profile|master/co_profile|
-	2|Ganti Password|admin/change_password|
-	3|Log Out|admin/logout|
+	;1|Company Profile|master/co_profile|
+	1|Ganti Password|admin/change_password|
+	2|Log Out|admin/logout|
 	
 	[SPB]
 	1|SPB Baru|spb/index|
@@ -31,15 +31,15 @@
 	
 	[Laporan]
 	1|SPB|laporan/lap_daftar|
-	2|Nasabah|laporan/nasabah|
-	3|Jenis Barang|laporan/material|
-	4|Lelang|laporan/lelang|
+	2|Nasabah|laporan/lap_nasabah|
+	3|Jenis Barang|laporan/lap_material|
+	;4|Lelang|laporan/lap_lelang|
 	
 	[Master]
-	1|System Setup|master/config|
-	2|Group Barang|master/group_mt|
-	3|Jenis Barang|master/jenis_mt|
-	4|User Account|admin/userlist|
+	1|Label Barang|master/label_spb|
+	;2|Group Barang|master/group_mt|
+	;3|Jenis Barang|master/jenis_mt|
+	2|User Account|admin/userlist|
 	
 	[User Account]
 	1|Add User|add|

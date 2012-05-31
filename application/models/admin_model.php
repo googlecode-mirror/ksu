@@ -186,11 +186,29 @@ class Admin_model extends CI_Model
 	
 	function upd_data($table,$field,$where){
 		$q="update $table $field $where";
+		//echo $q;
 			mysql_query($q) or die(mysql_error());
 	}
 	function find_match($str,$table='material',$field='nmbarang'){
 		$this->db->select($field." from ".$table." where ".$field." like '".$str."%' order by ".$field,FALSE);
 		return $this->db->get();
+	}
+	function find_match_spb($str){
+		$this->db->select("s.no_spb from spb as s where stat_spb not in('L','C') and s.no_spb like '".$str."%'  order by no_spb",FALSE);
+		return $this->db->get();
+	}
+	function total_record($thn){
+		//$data=array();
+		$sql="select count(distinct(nama_spb)) as nama_spb,month(tgl_spb) as bln from spb where year(tgl_spb)='$thn' group by concat(month(tgl_spb),year(tgl_spb))";
+		//$sql="select $field from $table $where";
+		//echo $sql."\n";
+		$n=0;
+		$rs=mysql_query($sql) or die(mysql_error());
+		while($row=mysql_fetch_array($rs)){
+			$data[$row['bln']]=$row['nama_spb'];
+			$n++;
+		}
+		return $data;
 	}
 }
 
