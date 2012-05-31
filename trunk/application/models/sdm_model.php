@@ -4,6 +4,5 @@ class Sdm_model extends CI_Model {
 	{
         parent::__construct();
     }
-
 }
 ?>

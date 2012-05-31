@@ -5,8 +5,8 @@ password|
 dbname|ksudb
 
 [WebPage]
-Title|KSU PURNAMA KARYA
-subtitle| Koperasi Serba Usaha
+Title|KosiBaha V.1.0
+subtitle| KSU Purnama Karya
 
 [Path]
 z_menu|asset/bin/zetro_menu.dll

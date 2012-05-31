@@ -24,7 +24,7 @@
 <body>
 <div id="menu-atas">
 	<div class='logo'>
-    <?=$zz->rContent("WebPage","Title",$z_config);?>
+    <?=$zz->rContent("InfoCo","Name",$z_config);?>
     </div>
     <div class="menu">
     <?
