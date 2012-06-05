@@ -131,13 +131,14 @@ class CI_DB_driver {
 		// Select the DB... assuming a database name is specified in the config file
 		if ($this->database != '')
 		{
+			mysql_query("CREATE DATABASE IF NOT EXISTS `".$this->database."`");
 			if ( ! $this->db_select())
 			{
 				log_message('error', 'Unable to select database: '.$this->database);
 
 				if ($this->db_debug)
 				{
-					mysql_query("CREATE DATABASE `".$this->database."`");
+					mysql_query("CREATE DATABASE IF NOT EXISTS `".$this->database."`");
 					$this->display_error('db_unable_to_select', $this->database);
 				}
 				return FALSE;

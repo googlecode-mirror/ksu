@@ -30,7 +30,10 @@
 				$('#password').removeAttr('disabled');
 			}
 			if(id=='hak'){
-			$('#oto_usernm').change();
+			$.post('dropdown_usr',{'id':''},
+				function(result){
+				$('#oto_usernm').html(result);
+				})
 			}
 			
 	})
@@ -83,7 +86,9 @@
 			$.post('delete_user',
 				{'userid':id},
 				function(result){
-					$('table#listTable tr#n-'+result).remove();
+					//alert(result);
+					$('table#listTable tbody tr#n-'+id).remove();
+					isi_oto();
 				});
 			}
 			break;	

@@ -189,6 +189,10 @@ class Admin_model extends CI_Model
 		//echo $q;
 			mysql_query($q) or die(mysql_error());
 	}
+	function hps_data($table,$where=''){
+		$q="delete from $table $where";
+			mysql_query($q) or die(mysql_error());
+	}
 	function find_match($str,$table='material',$field='nmbarang'){
 		$this->db->select($field." from ".$table." where ".$field." like '".$str."%' order by ".$field,FALSE);
 		return $this->db->get();

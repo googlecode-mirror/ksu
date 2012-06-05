@@ -1,0 +1,5 @@
+<graph caption='Grafik Jml Nasabah Tahun :2012' xAxisName='Bulan' yAxisName='Jumlah' numberPrefix='' showvalues='1'  numDivLines='4' formatNumberScale='0' decimalPrecision='0' anchorSides='10' anchorRadius='3' anchorBorderColor='00990'>
+<set name='2' value='1'/>
+<set name='4' value='1'/>
+<set name='5' value='2'/>
+</graph>
