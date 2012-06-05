@@ -16,6 +16,9 @@ $(document).ready(function(e) {
 	$('#userid').val('<?=$uid;?>');
 	$('#username').val('<?=$unm;?>');
 });
+	function isi_oto(){
+   		$('#oto_usernm').html("<? dropdown('users','userid','username',"where levelid<>'1' order by username",$this->session->userdata('userid'));?>");
+	}
 </script>
 <div id='lock' class='black_overlay'></div>
 <div class='contents'>
@@ -32,7 +35,7 @@ $(document).ready(function(e) {
 if($ac=='Y' || $ae=='Y' || $user_aktiv=='Superuser'){
 echo "<form id='frm1' name='frm1' action='' method='post'>";
 $zb=new zetro_frmBuilder('asset/bin/form.cfg');
-$zb->BuildForm('Adduser',true,'80%');
+$zb->BuildForm('Adduser',true,'70%');
 }else{
  no_auth();
 }
@@ -42,19 +45,18 @@ $zb->BuildForm('Adduser',true,'80%');
 <?
 if($le=='Y' || $lv=='Y' || $user_aktiv=='Superuser'){
 $zb=new zetro_listBuilder('asset/bin/form.cfg');
-$zb->ListHeader('Adduser','100%','listTable');
+$zb->ListHeader('Adduser','70%','listTable');
 $no=0;//($page+1);
 	foreach ($userlst->result_array() as $lst){
-		//$no++;
-		echo "<tr class='xx' align='center' id='n-".$lst['userid']."'>
+		 $no++;
+		echo "<tbody><tr class='xx' align='center' id='n-".$lst['userid']."'>
 			 <td class='kotak'>$no</td>
 			 <td class='kotak'>".$lst['userid']."</td>
 			 <td class='kotak' align='left'>".$lst['username']."</td>
 			 <td class='kotak' id='l-".$lst['levelid']."' >".rdb("user_level","nmlevel","","where idlevel='".$lst['levelid']."'")."</td>
 			 <td class='kotak' width='10%'>";
-			 if ($le=='Y' || $user_aktiv=='Superuser' ) $zb->event($lst['userid']);
-			echo "<td></tr>";
-			 $no++;
+			 echo ($le=='Y' || $user_aktiv=='Superuser' )? $zb->event($lst['userid']):'&nbsp;';
+			 echo "</td></tr>";
 	}
 echo "</tbody></table>\n";
 }else{

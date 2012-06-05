@@ -43,9 +43,8 @@ class Admin extends CI_Controller {
 	
 	}
 	 public function delete_user(){
-		 $user=trim($_POST['userid']);
-		 $this->Admin_model->hapus_table('users','userid',$user);
-		 echo $user;
+		 $data=array();
+		 $this->Admin_model->hps_data('users',"where userid='".$_POST['userid']."'");
 	 }
 	 public function delete_level(){
 		 $user=trim($_POST['idlevel']);
@@ -196,6 +195,8 @@ class Admin extends CI_Controller {
 		$this->field=$field;
 	}
 	function cek_db_user(){
+		$create_db="CREATE DATABASE IF NOT EXISTS `".$this->zn->rContent("Server","dbname",$this->zc)."`";
+		mysql_query($create_db);
 		//$this->db->select('*');
 		$query="show tables in ".$this->zn->rContent("Server","dbname",$this->zc)." like 'users'";
 		$rs=mysql_query($query)or die(mysql_error());
@@ -356,6 +357,9 @@ class Admin extends CI_Controller {
 				<td class='kotak xy' align='center' abbr='".$rw['idlevel']."' id='hps' title='click for delete'><b>X</b></td>\n
 				</tr>\n";
 		}
+	}
+	function dropdown_usr(){
+		echo dropdown('users','userid','username',"where levelid<>'1' order by username",$this->session->userdata('userid'));
 	}
 }
 ?>

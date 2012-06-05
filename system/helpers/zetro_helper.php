@@ -239,10 +239,10 @@
 	   }else{
 		if ($action=='Y'){
 			return($showtgl==false)?
-		   		 "<img src='".base_url()."/asset/images/iconic.png' title='Telah di perpanjang ".($stat)." kali.\nTanggal Jatuh Tempo berikutnya :".tglfromSql(getNextDays($jtspb,(($stat+1) *30)))."'>":
+		   		 "<img src='".base_url()."/asset/images/iconic.png' ondblclick=\"reset_upd('$no_spb','$pp_ke','');\" title='Telah di perpanjang ".($stat)." kali.\nTanggal Jatuh Tempo berikutnya :".tglfromSql(getNextDays($jtspb,(($stat+1) *30)))."'>":
 				 ShortTgl($nextjtspb2);
 		}else if($action=='N'){
-			return	"<img src='".base_url()."/asset/images/8.png' title='Tidak di perpanjang lanjut untuk process lelang'>";
+			return	"<img src='".base_url()."/asset/images/8.png' ondblclick=\"reset_upd('$no_spb','$pp_ke','Y');\" title='Tidak di perpanjang lanjut untuk process lelang'>";
 		}else if($action=='L'){
 			return	"<img src='".base_url()."/asset/images/bullet.png' title='Lunas'>";
 		}else{

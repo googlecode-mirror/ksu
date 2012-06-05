@@ -18,7 +18,7 @@ class zetro_listBuilder{
 		$this->tp=$tp;
 		$jml=$zm->Count($section,$this->path);
 		($id=='')?$jud='listTable':$jud=$id;
-		echo "<table id='$id' style='border-collapse:collapse' width='$width'>\n<thead>
+		echo "<table id='$id' border='0' style='border-collapse:collapse' width='$width'>\n<thead>
 			  <tr align='center' class='header'>\n\r
 			  <th id='c0' width='4%' class='kotak'>No.</th>\n\r";
 			  for($i=1;$i<=$jml;$i++){

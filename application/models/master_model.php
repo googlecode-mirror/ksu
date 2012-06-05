@@ -10,9 +10,9 @@ class Master_model extends CI_Model {
 	}
 		
 	function db_list_list($lst){
-		  $dbn=$this->db->query("select p.* from spb as p , material as m where m.nmgroup='".$lst."'
-		   and m.nmbarang=p.id_barang and stat_spb='Y' order by p.no_spb");	
-		return $dbn;
+		//echo "select p.* from spb as p , material as m where m.nmgroup='".$lst."' and m.nmbarang=p.id_barang and p.stat_spb='Y' order by p.no_spb";
+		  $q=$this->db->query("select p.* from spb as p , material as m where m.nmgroup='".$lst."' and m.nmbarang=p.id_barang and p.stat_spb='Y' order by p.no_spb");	
+		return $q;
 	}
 }
 ?>
