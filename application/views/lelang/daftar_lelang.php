@@ -20,7 +20,7 @@ panel_multi('daftarlelang',true);
 </tr>
 <tr class='header' align='center'>
 <th class='kotak' width='6%'>NO.SPB</th>
-<Th class='kotak' width='6%'>TGL</Th>
+<th class='kotak' width='6%'>TGL</th>
 </tr>
 </thead>
 <tbody>
@@ -31,6 +31,20 @@ panel_multi_end();
 panel_end()?>
 <input type='hidden' id='prs' value='' />
 
+<div id='print_lelang' style="padding:5; display:none; width:60%">
+<table id='listdata_le' width='98%' border='1' style='border-collapse:collapse'>
+<thead>
+<tr class='header'>
+<tr class='header' align='center'>
+<th class='kotak' width='5%'>NO</th>
+<th class='kotak' width='60%'>NAMA BARANG</th>
+<th class='kotak' width='35%'>NO. SPB</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
 
+</div>
 
 

@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	='http://localhost/ksu';
+$config['base_url']='http://localhost/ksu';
 $config['menu_img']='asset/images/menu/';
 
 /*
@@ -45,8 +45,8 @@ $config['index_page'] = 'index.php';
 | 'ORIG_PATH_INFO'	Uses the ORIG_PATH_INFO
 |
 */
-$config['uri_protocol']	= 'REQUEST_URI';
-
+$config['uri_protocol']	= 'REQUEST_URI'; //'REQUEST_URI';
+//$config['uri_protocol']	= 'AUTO';
 /*
 |--------------------------------------------------------------------------
 | URL suffix
@@ -155,10 +155,10 @@ $config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
 | use segment based URLs.
 |
 */
-$config['allow_get_array']		= TRUE;
+$config['allow_get_array']	= TRUE;
 $config['enable_query_strings'] = FALSE;
 $config['controller_trigger']	= 'c';
-$config['function_trigger']		= 'm';
+$config['function_trigger']	= 'm';
 $config['directory_trigger']	= 'd'; // experimental not currently in use
 
 /*
@@ -245,8 +245,8 @@ $config['encryption_key'] = 'zetro';
 | 'sess_time_to_update'		= how many seconds between CI refreshing Session Information
 |
 */
-$config['sess_cookie_name']		= 'ci_session';
-$config['sess_expiration']		= 7200;
+$config['sess_cookie_name']	= 'ci_session';
+$config['sess_expiration']	= 7200;
 $config['sess_expire_on_close']	= FALSE;
 $config['sess_encrypt_cookie']	= FALSE;
 $config['sess_use_database']	= FALSE;

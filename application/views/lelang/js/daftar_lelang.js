@@ -4,7 +4,7 @@ $(document).ready(function(e) {
 	if (prs==''){
 		$('#daftarlelang').removeClass('j_panel');
 		$('#daftarlelang').addClass('j_panel2');
-		$('table#panel tr td.plt').hide();
+		$('table#panel tr td.plt').show();
 		}else{
 		$('#labelbarang').removeClass('j_panel');
 		$('#labelbarang').addClass('j_panel2');
@@ -42,7 +42,11 @@ $(document).ready(function(e) {
 			$('table#listdata tbody').html(result);
 		});
 	$('#print').click(function(){
-		$('span#v_labelbarang').print();
+		$.post('print_lelang',{'id':''},
+			   function(result){
+				   $('table#listdata_le tbody').html(result);
+				$('div#print_lelang').print();
+			   })
 	})
 
 });

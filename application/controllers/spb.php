@@ -33,25 +33,10 @@ class Spb extends CI_Controller {
 		$data['no_spb']=$this->Admin_model->penomoran();
 		//$this->print_slip();
 		$this->load->view('admin/header');
-		$this->Admin_model->is_oto_all('index',$this->load->view('spb/spbnew',$data));
+		$this->Admin_model->is_oto_all('spb/index',$this->load->view('spb/spbnew',$data));
 		$this->load->view('admin/footer');
 	}
 
-	public function penomoran(){
-	//$data=array();
-	$datak=$this->Admin_model->penomoran();
-	if(count($datak)>0 ){$nomor=$datak['nomor'];}else{$nomor='';}
-	($nomor=='')?$nomor=1:$nomor=(int)$nomor+1;
-		if(strlen($nomor)==1){
-		$nomo='00'.$nomor;
-		}else if(strlen($nomor)==2){
-			$nomo='00'.$nomor;
-		}else{
-			$nomo=$nomor;
-		}
-		$nom=date('Ymd').'-'.$nomo;
-		return $nom;
-	}
 	function jenisbarang(){
 		$idbr=$_POST['nmbarang'];
 		echo dropdown('material','nmbarang','nmbarang',"order by nmbarang",$idbr);
@@ -109,18 +94,31 @@ class Spb extends CI_Controller {
 		$data=$this->Admin_model->field_exists('blacklist',"where ktp_spb='$ktp_spb'",'ktp_spb');
 		echo ($data=='')? '':"No. KTP tersebut masuk dalam daftar blacklist\nSilahkan cek di menu Nasabah Blacklist";
 	}
+	function cek_ktp(){
+		$data=array();
+		$nama_spb=$_POST['nama_spb'];
+		$ktp_spb=$_POST['ktp_spb'];
+		$data['ktp_spb']=$this->Admin_model->show_single_field("nasabah","ktp_spb","where nama_spb='".$nama_spb."'");	
+		$data['nama_spb']=$this->Admin_model->show_single_field("nasabah","nama_spb","where ktp_spb='".$ktp_spb."'");	
+		echo json_encode($data);
+	}
 	function simpan_spb(){
 		$datax=array();
+		//simpan spb
+		$this->get_data_field('Spb','spb');
+		//cek data nasabah jika belum ada simpan di db nasabah
+		if($this->Admin_model->show_single_field("nasabah","nama_spb","where nama_spb='".$this->input->post('nama_spb')."'")==''){
+		$this->get_data_field('nasabah','nasabah');}
+		//update nomor spb catat di table nomorspb
 		$nomor=explode('/',$this->input->post('no_spb'));
 		$datax['no_spb']=(int)$nomor[0];
 		$datax["created_by"]=$this->session->userdata("userid");
-		$this->get_data_field('Spb','spb');
-		if($this->Admin_model->show_single_field("nasabah","nama_spb","where nama_spb='".$this->input->post('nama_spb')."'")==''){
-		$this->get_data_field('nasabah','nasabah');}
-		$this->Admin_model->update_nomor($datax);
+		$this->Admin_model->update_nomor($datax,'nomorspb');
+		$this->print_slip();
+	}
+	function redir(){
 		redirect('spb/index');
 	}
-	
 	public function get_data_field($section,$table){
 		$data=array();
 		$jml=$this->zn->Count($section,$this->nfiles);
@@ -165,13 +163,13 @@ class Spb extends CI_Controller {
 		$data=array();
 		($this->input->post('bulan')=='')? $bln=date('m'):$bln=$this->input->post('bulan');
 		($this->input->post('thn')=='')? $thn=date('Y'):$thn=$this->input->post('thn');
-		$data['ae']=$this->Admin_model->is_oto('daftar','e');
+		$data['ae']=$this->Admin_model->is_oto('spb/daftar','e');
 		$data['list']=$this->Admin_model->show_list('spb',"where month(tgl_spb)='".$bln."' and year(tgl_spb)='".$thn."' order by left(no_spb,5),year(tgl_spb)");
 		$data['bln']=$this->input->post('bulan');
 		$data['thn']=$this->input->post('thn');
 		//print_r($data);
 		$this->load->view('admin/header');
-		$this->Admin_model->is_oto_all('daftar',$this->load->view('spb/daftar_spb',$data));
+		$this->Admin_model->is_oto_all('spb/daftar',$this->load->view('spb/daftar_spb',$data));
 		$this->load->view('admin/footer');
 	}
 	function spb_edit(){
@@ -188,14 +186,14 @@ class Spb extends CI_Controller {
 	function perpanjang(){
 		$data=array();
 		$this->load->view('admin/header');
-		$this->Admin_model->is_oto_all('daftar',$this->load->view('spb/perpanjang_spb',$data));
+		$this->Admin_model->is_oto_all('spb/daftar',$this->load->view('spb/perpanjang_spb',$data));
 		$this->load->view('admin/footer');
 	}
 	function list_perpanjang(){
 		$n=0;
 		$data=array();$datax=array();
 		$no_spb=$_POST['no_spb'];
-		$data['ae']=$this->Admin_model->is_oto('perpanjang','e');
+		$data['ae']=$this->Admin_model->is_oto('spb/perpanjang','e');
 		$data=$this->Admin_model->show_list('spb',"where no_spb='$no_spb' order by left(no_spb,5),year(tgl_spb)");
 		foreach($data->result() as $row){
 			$n++;
@@ -243,14 +241,14 @@ class Spb extends CI_Controller {
 	function lunas(){
 		$data=array();
 		$this->load->view('admin/header');
-		$this->Admin_model->is_oto_all('daftar',$this->load->view('spb/pelunasan_spb',$data));
+		$this->Admin_model->is_oto_all('spb/daftar',$this->load->view('spb/pelunasan_spb',$data));
 		$this->load->view('admin/footer');
 	}
 	function pelunasan(){
 		$n=0;
 		$data=array();$datax=array();
 		$no_spb=$_POST['no_spb'];
-		$data['ae']=$this->Admin_model->is_oto('lunas','e');
+		$data['ae']=$this->Admin_model->is_oto('spb/lunas','e');
 		$data=$this->Admin_model->show_list('spb',"where no_spb='$no_spb' order by left(no_spb,5),year(tgl_spb)");
 		foreach($data->result() as $row){
 			$n++;
@@ -275,27 +273,33 @@ class Spb extends CI_Controller {
 	}
 	function print_slip(){
 		$this->zetro_slip->path=$this->session->userdata('userid');
-		$this->zetro_slip->mode();
-		$this->zetro_slip->newline(9);
+		$this->zetro_slip->modes('wb');
+		$this->zetro_slip->newline(8);
 		$this->zetro_slip->content($this->isi_slip());
 		$this->zetro_slip->create_file();	
-		system("print '".$this->session->userdata('userid')."_slip.txt'");
-		system("close");
+		//system("print C:\\xampp\\htdocs\\KSU\\".$this->session->userdata('userid')."_slip.txt");
+		//system("close");
+		$this->redir();
 	}
 	function isi_slip(){
+	$tab=15;
 		$brsbaru=" \r\n";
 		$nospb=explode('/',$_POST['no_spb']);
 		$tglspb=explode('/',$_POST['tgl_spb']);
-		$isine=array(str_repeat(' ',9).$nospb[0].str_repeat(' ',5).$nospb[2].str_repeat(' ',5).substr($nospb[3],2,2).$brsbaru.$brsbaru,
-					 str_repeat(' ',12).$tglspb[0].str_repeat(' ',5).$tglspb[1].str_repeat(' ',5).substr($tglspb[2],2,2).$brsbaru.$brsbaru.$brsbaru,
-					 str_repeat(' ',22).$_POST['nama_spb'].$brsbaru.$brsbaru,
-					 str_repeat(' ',22).$_POST['ktp_spb'].$brsbaru.$brsbaru.$brsbaru,
-					 str_repeat(' ',22).$_POST['id_barang'].$brsbaru.$brsbaru.$brsbaru.$brsbaru.$brsbaru,
-					 str_repeat(' ',22).'Rp.  '.number_format($_POST['taksir_spb'],2).$brsbaru.$brsbaru,
-					 str_repeat(' ',22).'Rp.  '.number_format($_POST['nilai_spb'],2).$brsbaru.$brsbaru,
-					 str_repeat(' ',22).$_POST['jw_spb'].' Hari'.$brsbaru.$brsbaru,
-					 str_repeat(' ',22).$_POST['jt_spb'].$brsbaru);
+		$isine=array(str_repeat(' ',0).$nospb[0].str_repeat(' ',6).$nospb[2].str_repeat(' ',3).substr($nospb[3],2,2).$brsbaru,
+					 str_repeat(' ',3).$tglspb[0].str_repeat(' ',6).$tglspb[1].str_repeat(' ',3).substr($tglspb[2],2,2).$brsbaru.$brsbaru,
+					 str_repeat(' ',$tab).$_POST['nama_spb'].$brsbaru.$brsbaru,
+					 str_repeat(' ',$tab).$_POST['ktp_spb'].$brsbaru.$brsbaru.$brsbaru,
+					 str_repeat(' ',$tab).$_POST['id_barang'].$brsbaru.$brsbaru.$brsbaru.$brsbaru,
+					 str_repeat(' ',$tab).'Rp.  '.number_format($_POST['taksir_spb'],2).$brsbaru.$brsbaru,
+					 str_repeat(' ',$tab).'Rp.  '.number_format($_POST['nilai_spb'],2).$brsbaru.$brsbaru,
+					 str_repeat(' ',$tab).$_POST['jw_spb'].' Hari'.$brsbaru.$brsbaru,
+					 str_repeat(' ',$tab).$_POST['jt_spb'].$brsbaru);
 		return $isine;
+	}
+	function re_print(){
+		system("print C:\\xampp\\htdocs\\KSU\\".$this->session->userdata('userid')."_slip.txt");
+		system("close");
 	}
 /*
 end of class spb

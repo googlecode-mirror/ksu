@@ -60,6 +60,12 @@ class zetro_frmBuilder {
 	function BuildFormButton($value,$action='button',$buttonCount=2,$tableCol=3){
 		echo "<tr><td>&nbsp;</td>
 				<td><input type='$action' id='saved' value='$value'>";
+				if($buttonCount >2){
+					$btn=explode(',',$this->caption);
+					for ($i=0;$i< count($btn);$i++){
+					echo "<input type='button' id='".strtolower(str_replace(" ","",$btn[$i]))."' value='".$btn[$i]."'>";
+					}
+				}
 				echo "<input type='reset' id='batal' value='Cancel'></td>
 				<td>&nbsp;</td></tr>\n";
 				echo $this->brs;

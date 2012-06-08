@@ -21,7 +21,7 @@ class Lelang extends CI_Controller {
 		$data=array();
 		$data['ttl']=$this->Admin_model->total_data('lelang','D',"pp_stat");
 		$this->load->view('admin/header');
-		$this->Admin_model->is_oto_all('index',$this->load->view('lelang/daftar_lelang',$data));
+		$this->Admin_model->is_oto_all('lelang/list_lelang',$this->load->view('lelang/daftar_lelang',$data));
 		$this->load->view('admin/footer');
 	}
 	
@@ -29,7 +29,7 @@ class Lelang extends CI_Controller {
 		$n=0;
 		$data=array();$datax=array();
 		$no_spb=$_POST['no_spb'];
-		$data['ae']=$this->Admin_model->is_oto('list_lelang','e');
+		$data['ae']=$this->Admin_model->is_oto('lelang/list_lelang','e');
 		$data=$this->Admin_model->show_list('perpanjang_spb',"where pp_stat='N' group by no_spb order by no_spb",'distinct(no_spb) as no_spb,pp_ke,sum(pp_bayar) as ppbayar');
 		if($data->num_rows>0){
 		foreach($data->result() as $row){
@@ -83,5 +83,21 @@ class Lelang extends CI_Controller {
 		echo json_encode($datax);
 	}
 	//label lelang
+	function print_lelang(){
+	$n=0;
+		$data=$this->Admin_model->show_list('lelang',"where pp_stat='D' group by no_spb order by no_spb");
+		if($data->num_rows>0){
+			foreach($data->result() as $row){
+				$n++;
+				echo "\n<tr class='xx' id='".$row->no_spb."' align='center'>
+					  <td class='kotak' align='center'>$n</td>
+					  <td class='kotak' align='left'>".$row->id_barang."</td>	
+					  <td class='kotak' align='center'>".substr($row->no_spb,0,5)."</td>";	
+			   echo " </tr>\n";
+			}
+		}else{
+			echo "Tidak ada barang yang akan di lelang";
+		}
+	}	
 }
 ?>
