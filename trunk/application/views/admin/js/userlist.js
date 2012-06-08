@@ -34,6 +34,7 @@
 				function(result){
 				$('#oto_usernm').html(result);
 				})
+			$('#oto_usernm').change();
 			}
 			
 	})

@@ -4,8 +4,8 @@ link_css('autosuggest.css','asset/css');
 link_js('zetro_number.js,spb.js,jquery_terbilang.js','asset/js,application/views/spb/js,asset/js');
 panel_begin('SPB','frm1');
 $zb=new zetro_frmBuilder('asset/bin/zetro_form.cfg');
-$zb->AddButton(array('Print Slip'));
-$zb->BuildForm('Spb',true,'80%','',3);
+$zb->AddButton('RePrint Slip');
+$zb->BuildForm('Spb',true,'80%','',2);
 panel_end();
 //popup menu
 popup_start('Tambah Jenis Barang',500,500,'frm2');
@@ -17,6 +17,7 @@ popup_end();
 $(document).ready(function(e) {
 	var today= new Date();
 	var bln='<?=date('m');?>';//today.getMonth();
+	lock('#no_spb');
 	(bln.length==0)? xx='0'+bln:xx=bln;
  	$('#no_spb').val('<?=$no_spb;?>/SPB/'+xx+'/'+today.getFullYear());
    $('#nama_spb').focus().select();

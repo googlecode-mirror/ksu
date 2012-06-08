@@ -69,7 +69,7 @@ class Admin extends CI_Controller {
 	}
 	function userlist(){
 		$data=array();
-		$this->nama_file('userlist');
+		$this->nama_file('add');
 		$data['ac']=$this->Admin_model->is_oto('add','c');
 		$data['ae']=$this->Admin_model->is_oto('add','e');
 		$data['le']=$this->Admin_model->is_oto('list','e');
@@ -85,7 +85,8 @@ class Admin extends CI_Controller {
 		$offset=0;
 		$data['userlst']=$this->Admin_model->userlist($limit,$offset);
 				$this->load->view('admin/header');
-				$this->Admin_model->is_oto_all($this->menu,$this->load->view('admin/userlist',$data));
+				//$this->Admin_model->is_oto_all($this->menu,$this->load->view('admin/userlist',$data));
+				$this->load->view('admin/userlist',$data);
 				$this->load->view('admin/footer');
 	}
 	//fungsi setup master pendapatan
@@ -274,7 +275,7 @@ class Admin extends CI_Controller {
 				  $sub_menu=$this->zn->Count($mnu[0],$this->zm);
 				  for ($sm=1;$sm<=$sub_menu;$sm++){
 					$sbm=explode('|',$this->zn->rContent($mnu[0],"$sm",$this->zm));
-					$sbmm=explode('/',$sbm[1]);
+					$sbmm=explode('|',$sbm[1]);
 					(count($sbmm)==1)?$xx=0:$xx=1;
 					$c=$this->Admin_model->cek_oto($sbmm[$xx],'c',$userid);
 					$e=$this->Admin_model->cek_oto($sbmm[$xx],'e',$userid);
@@ -302,14 +303,26 @@ class Admin extends CI_Controller {
 						  </tr>\n";
 						  for ($ss=1;$ss<=$sub_sub;$ss++){
 							$ssmn=explode('|',$this->zn->rContent($sbm[0],"$ss",$this->zm));
+							$sbmm_sub=explode('|',$ssmn[1]);
+							(count($sbmm_sub)==1)?$xx=0:$xx=1;
+							$c_sub=$this->Admin_model->cek_oto($sbmm_sub[$xx],'c',$userid);
+							$e_sub=$this->Admin_model->cek_oto($sbmm_sub[$xx],'e',$userid);
+							$v_sub=$this->Admin_model->cek_oto($sbmm_sub[$xx],'v',$userid);
+							$p_sub=$this->Admin_model->cek_oto($sbmm_sub[$xx],'p',$userid);
+							$d_sub=$this->Admin_model->cek_oto($sbmm_sub[$xx],'d',$userid);
+							($c_sub=='Y')? $c_ck_sub="checked='checked'":$c_ck_sub='';
+							($e_sub=='Y')? $e_ck_sub="checked='checked'":$e_ck_sub='';
+							($v_sub=='Y')? $v_ck_sub="checked='checked'":$v_ck_sub='';
+							($p_sub=='Y')? $p_ck_sub="checked='checked'":$p_ck_sub='';
+							($d_sub=='Y')? $d_ck_sub="checked='checked'":$d_ck_sub='';
 							echo "<tr class='xx'>\n
 								  <td class='kotak'>&nbsp;</td>\n
 								  <td class='kotak'>".str_repeat('&nbsp;',12)."&rArr;&nbsp;".$ssmn[0]."</td>\n
-								  <td class='kotak' align='center'><input type='checkbox' id='c-".$ssmn[1]."' $c_ck $bisa  ></td>\n
-								  <td class='kotak' align='center'><input type='checkbox' id='e-".$ssmn[1]."' $e_ck $bisa  ></td>\n
-								  <td class='kotak' align='center'><input type='checkbox' id='v-".$ssmn[1]."' $v_ck $bisa  ></td>\n
-								  <td class='kotak' align='center'><input type='checkbox' id='p-".$ssmn[1]."' $p_ck $bisa  ></td>\n
-								  <td class='kotak' align='center'><input type='checkbox' id='d-".$ssmn[1]."' $d_ck $bisa  ></td>\n
+								  <td class='kotak' align='center'><input type='checkbox' id='c-".$ssmn[1]."' $c_ck_sub $bisa  ></td>\n
+								  <td class='kotak' align='center'><input type='checkbox' id='e-".$ssmn[1]."' $e_ck_sub $bisa  ></td>\n
+								  <td class='kotak' align='center'><input type='checkbox' id='v-".$ssmn[1]."' $v_ck_sub $bisa  ></td>\n
+								  <td class='kotak' align='center'><input type='checkbox' id='p-".$ssmn[1]."' $p_ck_sub $bisa  ></td>\n
+								  <td class='kotak' align='center'><input type='checkbox' id='d-".$ssmn[1]."' $d_ck_sub $bisa  ></td>\n
 								  </tr>\n";
 						  }
 				  }
@@ -320,15 +333,18 @@ class Admin extends CI_Controller {
 		$field=$_POST['idfld'];
 		$status=$_POST['stat'];
 		($status=='true')?$sts='Y':$sts='N';
+		//$idmenu=str_replace("__","/",$_POST['idmenu']);
 		$idmenu=$_POST['idmenu'];
 		$uid=$_POST['userid'];
 		$data['userid']=$_POST['userid'];
+		//$data['idmenu']=str_replace("__","/",$_POST['idmenu']);
 		$data['idmenu']=$_POST['idmenu'];
 		$data[$field]=$sts;
 		$cekk=$this->Admin_model->field_exists('useroto',"where idmenu='$idmenu' and userid='$uid'","idmenu");
 		($cekk!='')?
 		$this->Admin_model->upd_data('useroto',"set $field='$sts'","where idmenu='$idmenu' and userid='$uid'"):
-		$this->Admin_model->simpan_data('useroto',$data);	
+		$this->Admin_model->simpan_data('useroto',$data);
+		echo $cekk."//".$_POST['idmenu'];	
 	}
 	
 	function showlevel(){

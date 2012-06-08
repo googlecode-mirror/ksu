@@ -19,13 +19,13 @@ class Laporan extends CI_Controller {
 		$data=array();
 		($this->input->post('bulan')=='')? $bln=date('m'):$bln=$this->input->post('bulan');
 		($this->input->post('thn')=='')? $thn=date('Y'):$thn=$this->input->post('thn');
-		$data['ae']=$this->Admin_model->is_oto('lap_daftar','e');
+		$data['ae']=$this->Admin_model->is_oto('laporan/lap_daftar','e');
 		$data['list']=$this->Admin_model->show_list('spb',"where month(tgl_spb)='".$bln."' and year(tgl_spb)='".$thn."' order by left(no_spb,5),year(tgl_spb)");
 		$data['bln']=$this->input->post('bulan');
 		$data['thn']=$this->input->post('thn');
 		//print_r($data);
 		$this->load->view('admin/header');
-		$this->Admin_model->is_oto_all('lap_daftar',$this->load->view('laporan/lap_daftar_spb',$data));
+		$this->Admin_model->is_oto_all('laporan/lap_daftar',$this->load->view('laporan/lap_daftar_spb',$data));
 		$this->load->view('admin/footer');
 	}
 	
@@ -33,7 +33,7 @@ class Laporan extends CI_Controller {
 		$n=0;
 		$data=array();$datax=array();
 		$no_spb=$_POST['no_spb'];
-		$data['ae']=$this->Admin_model->is_oto('perpanjang','e');
+		$data['ae']=$this->Admin_model->is_oto('spb/perpanjang','e');
 		$data=$this->Admin_model->show_list('spb',"where jt_spb <now() order by left(no_spb,5),year(tgl_spb)");
 		foreach($data->result() as $row){
 			$n++;
@@ -88,7 +88,7 @@ class Laporan extends CI_Controller {
 		//print_r($this->datasec);
 		$this->data_XML();
 		$this->load->view('admin/header');
-		$this->Admin_model->is_oto_all('lap_nasabah',$this->load->view('laporan/lap_nasabah',$data));
+		$this->Admin_model->is_oto_all('laporan/lap_nasabah',$this->load->view('laporan/lap_nasabah',$data));
 		$this->load->view('admin/footer');
 	}
 	function lap_nilaitaksir(){
@@ -129,7 +129,7 @@ class Laporan extends CI_Controller {
 		//print_r($this->datasec);
 		$this->data_XML();
 		$this->load->view('admin/header');
-		$this->Admin_model->is_oto_all('lap_nasabah',$this->load->view('laporan/lap_barang',$data));
+		$this->Admin_model->is_oto_all('laporan/lap_nasabah',$this->load->view('laporan/lap_barang',$data));
 		$this->load->view('admin/footer');
 	}
 	function lap_jumlahbarang(){

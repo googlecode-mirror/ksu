@@ -147,26 +147,49 @@ $(document).ready(function(e) {
 	$('form#frm1 input#saved').click(function(){
 		$('#taksir_spb').val(to_number($('#taksir_spb').val()));
 		$('#nilai_spb').val(to_number($('#nilai_spb').val()));
-		if (confirm('Print Slip SPB')){
+		unlock('input');
+		if($('#ktp_spb')!=''){
+		$('form#frm1').attr('action','simpan_spb');
+		   document.frm1.submit();
+		}else{
+			alert('No. KTP tidak boleh kosong');
+		}
+	})
+	$('#print_ulang').click(function(){
+		if (confirm('Apakah printer sudah siap?')){
 			$.post('print_slip',{
 					'no_spb':$('#no_spb').val(),
 					'tgl_spb':$('#tgl_spb').val(),
 					'nama_spb':$('#nama_spb').val(),
 					'ktp_spb':$('#ktp_spb').val(),
-					'id_barang':$('#ktp_spb').val(),
+					'id_barang':$('#id_barang').val(),
 					'taksir_spb':$('#taksir_spb').val(),
 					'nilai_spb':$('#nilai_spb').val(),
 					'jw_spb':$('#jw_spb').val(),
 					'jt_spb':$('#jt_spb').val()},
 					function(result){
-					$('form#frm1').attr('action','simpan_spb');
-					document.frm1.submit();
+						alert(result);
 					})
-		}else{
-					$('form#frm1').attr('action','simpan_spb');
-					document.frm1.submit();
 		}
+									
 	})
+	$('#reprintslip').click(function(){
+		$.post('re_print');
+	 })
+	 
+	$('#id_barang').change(function(){
+		var nm=$('#nama_spb').val();
+		var ktp=$("#ktp_spb").val();
+		$.post('cek_ktp',{'nama_spb':nm,'ktp_spb':ktp},
+			function(result){
+				var obj=$.parseJSON(result);
+				if (obj.nama_spb!=nm){
+					alert('No KTP tersebut adalah milik\n'+obj.nama_spb+'\n Mohon di check lagi!');
+					$('#ktp_spb').focus().select();
+				}
+			})
+	})
+		
 });
 
 function auto_suggest(linked,str,id){

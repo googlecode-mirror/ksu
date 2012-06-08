@@ -30,8 +30,8 @@
 	1|Daftar Lelang|lelang/list_lelang|
 	
 	[Laporan]
-	1|SPB|laporan/lap_daftar|
-	2|Nasabah|laporan/lap_nasabah|
+	1|Laporan SPB|laporan/lap_daftar|
+	2|Laporan Nasabah|laporan/lap_nasabah|
 	3|Jenis Barang|laporan/lap_material|
 	;4|Lelang|laporan/lap_lelang|
 	

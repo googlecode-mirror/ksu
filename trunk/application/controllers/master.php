@@ -22,7 +22,7 @@ class Master extends CI_Controller {
 		$data=array();
 		$data['ttl']=$this->Admin_model->total_data('lelang','D',"pp_stat");
 		$this->load->view('admin/header');
-		$this->Admin_model->is_oto_all('index',$this->load->view('master/master_label',$data));
+		$this->Admin_model->is_oto_all('master/label_spb',$this->load->view('master/master_label',$data));
 		$this->load->view('admin/footer');
 	}
 	function labellelang(){
@@ -37,7 +37,7 @@ class Master extends CI_Controller {
 				echo "<td width='450px' style='border:2px solid #000'><div class='stiker'>
 					  <table witdh='445' border='0' style='border-collapse:collapse; font-size:40px' height='345px'>
 					  <tr height='30px'><td width='30%'>NAMA</td><td width='70%' nowrap>:&nbsp;".rdb('spb','nama_spb','nama_spb',"where no_spb='".$row->no_spb."'")."</td></tr>\n
-					  <tr height='30px'><td width='30%'>NO</td><td width='70%'>:&nbsp;".substr($row->no_spb,0,5)."</td></tr>\n
+					  <tr height='30px'><td width='30%'>NO</td><td width='70%'>:&nbsp;".substr($row->no_spb,0,5)." [ ".substr($row->no_spb,13,4)." ] </td></tr>\n
 					  <tr height='30px'><td width='30%'>JK.WKT</td><td width='70%'>:&nbsp;".$row->jw_spb." Hari</td></tr>\n
 					  <tr height='30px'><td width='30%'>TGL.JT</td><td width='70%'>:&nbsp;".tglfromSql(rdb('spb','tgl_spb','tgl_spb',"where no_spb='".$row->no_spb."'"))."</td></tr>\n
 					  <tr height='30px'><td width='30%'>Rp.</td><td width='70%' style='border-bottom:1px solid #000'>:&nbsp;".number_format($row->nilai_spb,2)."</td></tr>\n
@@ -68,8 +68,7 @@ class Master extends CI_Controller {
 								<td class='kotak'>".$dbs['id_barang']."</td>
 								<td class='kotak'>".$dbs['no_spb']."</td>
 								<td class='kotak' align='center'>";?>
-									<input type='checkbox' id='ck-"<?=$dbs['no_spb'];?>"'
-									onclick="cek4label('<?=$dbs['no_spb'];?>');">
+									<input type='checkbox' id='ck-"<?=$dbs['no_spb'];?>"'onclick="cek4label('<?=$dbs['no_spb'];?>');">
 						  <? echo "</td>
 								</tr>";
 						 }

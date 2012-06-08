@@ -22,12 +22,12 @@ class Client extends CI_Controller {
 			$data=array();
 			($this->input->post('bulan')=='')? $bln=date('m'):$bln=$this->input->post('bulan');
 			($this->input->post('thn')=='')? $thn=date('Y'):$thn=$this->input->post('thn');
-			$data['ae']=$this->Admin_model->is_oto('list_nasabah','e');
+			$data['ae']=$this->Admin_model->is_oto('client/list_client','e');
 			$data['list']=$this->Admin_model->show_list('nasabah',"/*where month(doc_date)='".$bln."' and year(doc_date)='".$thn."'*/ order by nama_spb");
 			$data['bln']=$this->input->post('bulan');
 			$data['thn']=$this->input->post('thn');
 			$this->load->view('admin/header');
-			$this->Admin_model->is_oto_all('list_client',$this->load->view('sdm/list_nasabah',$data));
+			$this->Admin_model->is_oto_all('client/list_client',$this->load->view('sdm/list_nasabah',$data));
 			$this->load->view('admin/footer');
 	 
 	 }
@@ -36,12 +36,12 @@ class Client extends CI_Controller {
 		 $this->create_table('blacklist');
 			($this->input->post('bulan')=='')? $bln=date('m'):$bln=$this->input->post('bulan');
 			($this->input->post('thn')=='')? $thn=date('Y'):$thn=$this->input->post('thn');
-			$data['ae']=$this->Admin_model->is_oto('blacklist','e');
+			$data['ae']=$this->Admin_model->is_oto('client/blacklist','e');
 			$data['list']=$this->Admin_model->show_list('blacklist',"/*where month(doc_date)='".$bln."' and year(doc_date)='".$thn."'*/ order by nama_spb");
 			$data['bln']=$this->input->post('bulan');
 			$data['thn']=$this->input->post('thn');
 			$this->load->view('admin/header');
-			$this->Admin_model->is_oto_all('blacklist',$this->load->view('sdm/list_blacklist',$data));
+			$this->Admin_model->is_oto_all('client/blacklist',$this->load->view('sdm/list_blacklist',$data));
 			$this->load->view('admin/footer');
 	 
 	 }

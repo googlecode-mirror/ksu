@@ -25,7 +25,14 @@
 				$.post('lap_nilaibarang',{'thn':$('#thn').val()},
 				function(result){
 					var dv=result.split(',');
-					show_graph(dv[1]);
+					show_graph('chartdiv2');
+					$('#thn').val(dv[2]).select();
+				})
+			}else if(id=='jumlahbarang'){
+				$.post('lap_jumlahbarang',{'thn':$('#thn').val()},
+				function(result){
+					var dv=result.split(',');
+					show_graph('chartdiv');
 					$('#thn').val(dv[2]).select();
 				})
 			}

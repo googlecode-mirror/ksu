@@ -2,7 +2,7 @@
 
 class zetro_slip{
 	public $path;	
-	function __construct($path=''){
+	function __construct($path='c:\\temp\\'){
 		$this->path=$path;
 	}
 	function namafile($filename){
@@ -19,7 +19,7 @@ class zetro_slip{
 		}
 		return $this->jmlbaris;
 	}
-	function mode($model="wb"){
+	function modes($model="wb"){
 		$this->model=$model;	
 	}
 	
