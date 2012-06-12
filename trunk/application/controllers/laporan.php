@@ -8,12 +8,14 @@ class Laporan extends CI_Controller {
     function  __construct() {
         parent::__construct();
         $this->load->model('Admin_model');
-        $this->load->model('spb_model');
+        $this->load->model('lap_model');
 		$this->tc= new zetro_table_creator('asset/bin/zetro_table.cfg');
 		$this->zn= new zetro_manager();
 		$this->zc='asset/bin/zetro_config.dll';
 		$this->zm='asset/bin/zetro_menu.dll';
 		$this->nfiles='asset/bin/zetro_form.cfg';
+		//$this->load->library('fpdf');
+		define('FPDF_FONTPATH',$this->config->item('fonts_path'));
 	}
 	function lap_daftar(){
 		$data=array();
@@ -196,7 +198,6 @@ class Laporan extends CI_Controller {
 		}			
 	}
 	
-		
 
 /*
 end of class spb
