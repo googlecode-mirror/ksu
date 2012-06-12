@@ -81,7 +81,7 @@ $(document).ready(function(e) {
 		.focusout(function(){
 				$.post('cek_blacklist',{'ktp_spb':$(this).val()},
 				function(result){
-					//alert(result.length);
+					//alert(result);
 					if(result.length>16){
 						$('#txtmsg').html(result);
 						$('#info').show();
@@ -182,10 +182,13 @@ $(document).ready(function(e) {
 		var ktp=$("#ktp_spb").val();
 		$.post('cek_ktp',{'nama_spb':nm,'ktp_spb':ktp},
 			function(result){
+				//alert(result);
 				var obj=$.parseJSON(result);
-				if (obj.nama_spb!=nm){
+				if (obj.stat==1){
 					alert('No KTP tersebut adalah milik\n'+obj.nama_spb+'\n Mohon di check lagi!');
 					$('#ktp_spb').focus().select();
+				}else{
+					$('#taksir_spb').focus().select();	
 				}
 			})
 	})

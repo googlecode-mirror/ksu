@@ -5,7 +5,6 @@ Created Date :22/05/2012
 Function : jQuery List SPB
 */
 $(document).ready(function(e) {
-	lock('#no_spb,#id_barang,#jw_spb,#jt_spb');
 	$('img.del').hide();
     $('img').click(function(){
 	  var id=$(this).attr('id');

@@ -98,14 +98,16 @@ class Spb extends CI_Controller {
 		$data=array();
 		$nama_spb=$_POST['nama_spb'];
 		$ktp_spb=$_POST['ktp_spb'];
-		$data['ktp_spb']=$this->Admin_model->show_single_field("nasabah","ktp_spb","where nama_spb='".$nama_spb."'");	
-		$data['nama_spb']=$this->Admin_model->show_single_field("nasabah","nama_spb","where ktp_spb='".$ktp_spb."'");	
-		echo json_encode($data);
+		$ktp_spb_s=$this->Admin_model->show_single_field("nasabah","ktp_spb","where ktp_spb='".$ktp_spb."'");	
+		$nama_spb_s=$this->Admin_model->show_single_field("nasabah","nama_spb","where ktp_spb='".$ktp_spb."'");	
+		($ktp_spb==$ktp_spb_s)?	$stat=1:$stat=0;
+	     $data['stat']=$stat;
+		 $data['nama_spb']=$nama_spb_s;
+		 echo json_encode($data);
 	}
 	function simpan_spb(){
 		$datax=array();
 		//simpan spb
-		$this->get_data_field('Spb','spb');
 		//cek data nasabah jika belum ada simpan di db nasabah
 		if($this->Admin_model->show_single_field("nasabah","nama_spb","where nama_spb='".$this->input->post('nama_spb')."'")==''){
 		$this->get_data_field('nasabah','nasabah');}
@@ -114,6 +116,7 @@ class Spb extends CI_Controller {
 		$datax['no_spb']=(int)$nomor[0];
 		$datax["created_by"]=$this->session->userdata("userid");
 		$this->Admin_model->update_nomor($datax,'nomorspb');
+		$this->get_data_field('Spb','spb');
 		$this->print_slip();
 	}
 	function redir(){
