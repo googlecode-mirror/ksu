@@ -1,9 +1,11 @@
 <?php
+link_css('autosuggest.css','asset/css');
 empty($ttl)?$ttl0=0:$ttl0=$ttl;
 $img="<img src='".base_url()."asset/images/printer.png' id='print' title='Print Label' class='xx'>";
-$pilihan="<select id='spb_label' name='spb_lable'></select>";
+$pilihan="<input type='text' id='spb_label' name='spb_label' class='cari w100'>";
+$check="<input type='checkbox' id='re_prn'>";
 link_js('zetro_number.js,master_label.js','asset/js,application/views/master/js');
-panel_begin('Pilih Barang,Print Label','','Pilih SPB/material yang akan di buatkan label,',',,'.$img);
+panel_begin('Pilih Barang,Print Label','',$check .', Print Ulang, | Cari nama barang yang akan di label  :,'.$pilihan,',,'.$img.', Print to printer');
 $zb=new zetro_listBuilder('asset/bin/zetro_form.cfg');
 panel_multi('pilihbarang',true);
 ?>
@@ -24,6 +26,12 @@ panel_multi_end();
 panel_end();
 ?>
 <input type='hidden' id='prs' value='' />
+<div class="autosuggest" id="autosuggest_list"></div>
 <script language="javascript">
-
+	$(document).ready(function(e) {
+		$('#print').click(function(){
+			alert("test");
+			document.location.href='<?=base_url();?>index.php/master/print_label';
+		})
+    });
 </script>
