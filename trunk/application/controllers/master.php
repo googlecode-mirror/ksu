@@ -5,11 +5,13 @@ class Master extends CI_Controller {
 		parent::__construct();
 		$this->load->model('Admin_model');
 		$this->load->model('Master_model');
+		$this->load->library('fpdf');
 		$this->tc= new zetro_table_creator('asset/bin/zetro_table.cfg');
 		$this->zn= new zetro_manager();
 		$this->zc='asset/bin/zetro_config.dll';
 		$this->zm='asset/bin/zetro_menu.dll';
 		$this->nfiles='asset/bin/zetro_form.cfg';
+		define('FPDF_FONTPATH',$this->config->item('fonts_path'));
 	}
 	public function create_table($content){
 		$this->tc->table_name($content);
@@ -34,17 +36,18 @@ class Master extends CI_Controller {
 			foreach($data->result() as $row){
 				$n++;
 				if (($n-1) % $kolom==0) echo "<tr align='center' valign='middle' height='350px'>";
-				echo "<td width='450px' style='border:2px solid #000'><div class='stiker'>
-					  <table witdh='445' border='0' style='border-collapse:collapse; font-size:40px' height='345px'>
+				echo "<td width='350px' style='border:2px solid #000'><div class='stiker'>
+					  <table witdh='345' border='0' style='border-collapse:collapse; font-size:30px' height='345px'>
 					  <tr height='30px'><td width='30%'>NAMA</td><td width='70%' nowrap>:&nbsp;".rdb('spb','nama_spb','nama_spb',"where no_spb='".$row->no_spb."'")."</td></tr>\n
-					  <tr height='30px'><td width='30%'>NO</td><td width='70%'>:&nbsp;".substr($row->no_spb,0,5)." [ ".substr($row->no_spb,13,4)." ] </td></tr>\n
+					  <tr height='30px'><td width='30%'>NO</td><td width='70%'>:&nbsp;".substr($row->no_spb,0,5)." </td></tr>\n
 					  <tr height='30px'><td width='30%'>JK.WKT</td><td width='70%'>:&nbsp;".$row->jw_spb." Hari</td></tr>\n
-					  <tr height='30px'><td width='30%'>TGL.JT</td><td width='70%'>:&nbsp;".tglfromSql(rdb('spb','tgl_spb','tgl_spb',"where no_spb='".$row->no_spb."'"))."</td></tr>\n
-					  <tr height='30px'><td width='30%'>Rp.</td><td width='70%' style='border-bottom:1px solid #000'>:&nbsp;".number_format($row->nilai_spb,2)."</td></tr>\n
-					  <tr height='40px'><td colspan='2'>&nbsp;</td></tr></table></div></td><td width='5px'>&nbsp;</td>";
+					  <tr height='30px'><td width='30%'>TGL.JT</td><td width='70%'>:&nbsp;".tglfromSql(rdb('spb','jt_spb','jt_spb',"where no_spb='".$row->no_spb."'"))."</td></tr>\n
+					  <tr height='30px'><td width='30%'>Rp.</td><td width='70%' style='border-bottom:1px solid #000'>:&nbsp;".number_format($row->nilai_spb)."</td></tr>\n
+					  <tr height='40px'><td colspan='2'>&nbsp;&nbsp;".$row->id_barang."</td></tr></table></div></td><td width='5px'>&nbsp;</td>";
 				if($n % $kolom==0) echo "</tr>";	  
 			}
 		}
+		
 	}
 	
 	function material_group(){
@@ -103,6 +106,52 @@ class Master extends CI_Controller {
 	}
 	
 	function hps_label_siap_print(){
-		$this->Admin_model->hps_data("labeling");
+		//$this->Admin_model->hps_data("labeling");
+		$this->Admin_model->upd_data("labeling","set pp_stat='P'","");
+	}
+	function re_print_label(){
+		$str=addslashes($_POST['str']);
+		$datax=$this->Admin_model->find_match($str,"material","nmbarang");
+		if($datax->num_rows>0){
+		echo "<ul>";
+			foreach ($datax->result_array() as $lst){
+				echo '<li onclick="suggest_click(\''.$lst['nmbarang'].'\');">'.$lst['nmbarang']."</li>";
+			}
+		echo "</ul>";
+		}
+	}
+	function re_print_data(){
+		$data=array();$datax=array();
+		$kolom=2;
+		$n=0;
+		$data=$this->Master_model->db_list();
+		if($data->num_rows>0){
+			foreach($data->result_array() as $row){
+				$datax=$this->Master_model->db_list_reprint($_POST['str'],$row['nmgroup']);
+				$n++;
+				//print_r($data);
+				echo "<tr valign='middle' class='xx header' id='".$row['nmgroup']."'>";
+				echo "<td class='kotak' colspan='4'>".$row['nmgroup']."</td>";
+				if($datax->num_rows>0){
+					foreach($datax->result_array() as $dbs){
+						  echo "<tr class='xx ".$row['nmgroup']."'>
+								<td width='5%' class='kotak'>&nbsp</td>
+								<td class='kotak'>".$dbs['id_barang']."</td>
+								<td class='kotak'>".$dbs['no_spb']."</td>
+								<td class='kotak' align='center'>
+									<input type='checkbox' id='ck-".$dbs['no_spb']."'onclick=\"cek42label('".$dbs['no_spb']."');\">
+						        </td></tr>";
+					}
+				}
+				echo "</tr>";	  
+			}
+		}
+	}
+	function print_label(){
+		$data=array();
+		$kolom=2;
+		$n=0;
+		$data['list']=$this->Admin_model->show_list('labeling',"where pp_stat='Y' order by no_spb");
+		$this->load->view('master/print_label',$data);
 	}
 }

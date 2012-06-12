@@ -134,20 +134,20 @@
 			  echo "<td width='120px' class='j_panel' id='".strtolower(str_replace(" ",'',$judul[$i]))."'>".$judul[$i]."</td>\n";
 			}
 		if($filter!=''){
-			echo "<td width='50px' class='flt'>&nbsp;</td>";
+			echo "<td width='50px' class='flt'>&nbsp;</td>\n";
 			$flt=explode(',',$filter);
 			for($z=0;$z< count($flt);$z++){
-				echo "<td bgcolor='' class='flt'>".$flt[$z]."</td>";
+				echo "<td bgcolor='' class='flt'>".$flt[$z]."</td>\n";
 			}
 		}
 		if($printer!=''){
-			echo "<td width='50px' class='plt'>&nbsp;</td>";
+			echo "<td width='50px' class='plt'>&nbsp;</td>\n";
 			$flt=explode(',',$printer);
 			echo "<td bgcolor='' class='plt' align='right'>";
 			for($z=0;$z< count($flt);$z++){
 				echo $flt[$z].'&nbsp;';
 			}
-			echo "</td>";
+			echo "</td>\n";
 		}
 		echo "</tr></table>\n
 			<div class='pn_content'>\n

@@ -200,3 +200,7 @@ img.menux:hover{ border:2px #FFFFFF solid;}
 			  background-color:#FFFFFF;
 }
 }
+.cari{background:url(../images/Search.png) no-repeat right ;
+	 height:21px;
+	 border:1px solid #666;
+	 }
