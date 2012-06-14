@@ -40,6 +40,6 @@ popup_end('');
 	$(document).ready(function(e) {
         $('#bulan').html("<? dropdown('spb','distinct(month(tgl_spb)) as bln','','order by month(tgl_spb)',$blne);?>");
         $('#thn').html("<? dropdown('spb','distinct(year(tgl_spb)) as thn','','order by year(tgl_spb)',$thne);?>");
-	    $('#id_barang').html("<? dropdown('material','nmbarang','nmbarang',"order by nmbarang");?>");
+	   // $('#id_barang').html("<? dropdown('material','nmbarang','nmbarang',"order by nmbarang");?>");
     });
 </script>

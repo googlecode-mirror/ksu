@@ -73,13 +73,13 @@ function ChapterBody($file,$file2)
     fclose($f);
     fclose($f2);
     //Font
-    $this->SetFont('Times','B',18);
+    $this->SetFont('Times','B',20);
 	$y=$this->GetY();
     //Output text in a 6 cm width column
-    $this->MultiCell(9,1,$txt,1,1);
+    $this->MultiCell(10,1,$txt,1,1);
 	$x=$this->GetX();
-	$this->SetXY(10,$y+$x-0.5);
-    $this->MultiCell(9,1,$txt2,1,1);
+	$this->SetXY(11,$y+$x-0.5);
+    $this->MultiCell(10,1,$txt2,1,1);
 }
 
 function PrintChapter($num,$file2,$file)

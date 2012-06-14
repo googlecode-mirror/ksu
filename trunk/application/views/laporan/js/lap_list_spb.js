@@ -100,11 +100,11 @@ $(document).ready(function(e) {
 			$('form#frm1').attr('action','lap_daftar');
 			document.frm1.submit();
 	})
-/*	$('#printing').click(function(){
+	$('#printing').click(function(){
 		var id=$('#yngaktif').val();
 		var nm;
 		(id=='daftarspb')?nm='listTable':nm='listdata';
 		$('table#'+nm).attr('border','1');
 		$('#v_'+id).print();
-	})*/
+	})
 });

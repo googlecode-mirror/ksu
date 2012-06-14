@@ -224,3 +224,9 @@ ERROR - 2012-06-14 03:30:57 --> Severity: Warning  --> Division by zero D:\inetp
 ERROR - 2012-06-14 03:30:57 --> Severity: Warning  --> Division by zero D:\inetpub\wwwroot\KSU\application\views\master\print_label.php 12
 ERROR - 2012-06-14 03:31:32 --> Severity: Warning  --> Division by zero D:\inetpub\wwwroot\KSU\application\controllers\master.php 173
 ERROR - 2012-06-14 03:31:52 --> Severity: Warning  --> Division by zero D:\inetpub\wwwroot\KSU\application\controllers\master.php 173
+ERROR - 2012-06-14 08:48:03 --> Severity: Warning  --> mysql_pconnect() [<a href='function.mysql-pconnect'>function.mysql-pconnect</a>]: Access denied for user 'root'@'localhost' (using password: NO) C:\xampp\htdocs\KSU\system\database\drivers\mysql\mysql_driver.php 91
+ERROR - 2012-06-14 08:48:03 --> Unable to connect to the database
+ERROR - 2012-06-14 09:16:55 --> Severity: Notice  --> Constant FPDF_VERSION already defined C:\xampp\htdocs\KSU\system\libraries\fpdff.php 10
+ERROR - 2012-06-14 09:16:56 --> Severity: Notice  --> Constant FPDF_VERSION already defined C:\xampp\htdocs\KSU\system\libraries\fpdff.php 10
+ERROR - 2012-06-14 09:27:14 --> Severity: Notice  --> Constant FPDF_VERSION already defined C:\xampp\htdocs\KSU\system\libraries\fpdff.php 10
+ERROR - 2012-06-14 09:27:15 --> Severity: Notice  --> Constant FPDF_VERSION already defined C:\xampp\htdocs\KSU\system\libraries\fpdff.php 10

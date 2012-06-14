@@ -1,6 +1,6 @@
 <?
 $pdf=new Zetro_pdf();
-$pdf->FPDFF("P","cm","A4");
+$pdf->FPDFF("P","cm","Legal");
 $pdf->SetMargins(0.5,0.5,0.5);
 $pdf->AddPage();
 $pdf->AliasNbPages();

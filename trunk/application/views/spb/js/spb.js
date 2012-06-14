@@ -30,11 +30,11 @@ $(document).ready(function(e) {
 				$.post('addbarang',
 					  {'nmgroup':grp,'nmbarang':nmb,'hgbarang':hgb},
 					  function(result){
-						  $.post('jenisbarang',{'nmbarang':result},
+						  /*$.post('jenisbarang',{'nmbarang':result},
 						  function(result){
-							  $('form#frm1 select#id_barang').html(result);
-						  });
-							  $('form#frm1 select#id_barang').val(nmb).select();
+							  $('form#frm1 #id_barang').val(result);
+						  });*/
+							  $('form#frm1 #id_barang').val(nmb);
 							  $('#nmbarang').val('');
 							  $('#hgbarang').val('0');
 							  $('#close').click();
@@ -81,13 +81,13 @@ $(document).ready(function(e) {
 		.focusout(function(){
 				$.post('cek_blacklist',{'ktp_spb':$(this).val()},
 				function(result){
-					//alert(result);
+					//alert(result.length);
 					if(result.length>16){
 						$('#txtmsg').html(result);
 						$('#info').show();
 					    $('div#lock').show();
 					}else{
-					 $('#taksir_spb').focus().select();
+					 //$('#taksir_spb').focus().select();
 					}
 				});
 		})
@@ -148,11 +148,11 @@ $(document).ready(function(e) {
 		$('#taksir_spb').val(to_number($('#taksir_spb').val()));
 		$('#nilai_spb').val(to_number($('#nilai_spb').val()));
 		unlock('input');
-		if($('#ktp_spb')!=''){
+		if($('#ktp_spb').val()!=''){
 		$('form#frm1').attr('action','simpan_spb');
 		   document.frm1.submit();
 		}else{
-			alert('No. KTP tidak boleh kosong');
+		alert('No. KTP Harus di isi terlebih dahulu');
 		}
 	})
 	$('#print_ulang').click(function(){
@@ -176,8 +176,17 @@ $(document).ready(function(e) {
 	$('#reprintslip').click(function(){
 		$.post('re_print');
 	 })
-	 
-	$('#id_barang').change(function(){
+	$('#id_barang')
+		.keyup(function()
+		{
+			var pos=$(this).offset();
+			var hgt=$(this).height();
+			var w=$(this).width();
+			$('#autosuggest_list').css({'width':w,'left':pos.left,'top':pos.top+hgt+4});
+			auto_suggest('find_mat',$(this).val(),$(this).attr('id'));
+		})
+		.focus(function()
+		{
 		var nm=$('#nama_spb').val();
 		var ktp=$("#ktp_spb").val();
 		$.post('cek_ktp',{'nama_spb':nm,'ktp_spb':ktp},
@@ -188,11 +197,12 @@ $(document).ready(function(e) {
 					alert('No KTP tersebut adalah milik\n'+obj.nama_spb+'\n Mohon di check lagi!');
 					$('#ktp_spb').focus().select();
 				}else{
-					$('#taksir_spb').focus().select();	
+				//$('#taksir_spb').focus().select();				
 				}
 			})
-	})
-		
+		})
+						   
+						
 });
 
 function auto_suggest(linked,str,id){
