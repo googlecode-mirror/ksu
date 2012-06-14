@@ -134,6 +134,7 @@ function suggest_click(str){
 	setTimeout("$('#autosuggest_list').fadeOut(500);", 50);	
 	$.post('re_print_data',{'str':str},
 	function(result){
+		//alert(result);
 		$('table#listdata tbody').html(result);
 	})
 	$('table#listdata tbody').show();

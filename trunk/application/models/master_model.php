@@ -4,8 +4,11 @@ class Master_model extends CI_Model {
 	{
         parent::__construct();
     }
-	function db_list(){
-		$q=$this->db->query("select distinct(nmgroup) as nmgroup from material order by nmgroup");
+	function db_list($grp=''){
+		($grp!='')?$where="where nmgroup='$grp'":$where='';
+		//$sql="select distinct(nmgroup) as nmgroup from material $where order by nmgroup";
+		//echo $sql;
+		$q=$this->db->query("select distinct(nmgroup) as nmgroup from material $where order by nmgroup");
 		return $q;
 	}
 		
@@ -16,9 +19,10 @@ class Master_model extends CI_Model {
 	}
 	
 	function db_list_reprint($lst,$grp){
-		$q=$this->db->query("select l.* from labeling as l,spb as p, material as m 
-							where m.nmgroup='".$grp."' and m.nmbarang=p.id_barang and p.stat_spb='Y' 
-							and pp_stat='P' and p.id_barang=l.id_barang and l.id_barang ='$lst'");
+		$sql="select l.* from labeling as l,spb as p, material as m where  p.stat_spb='Y' and l.pp_stat='P' and p.id_barang=l.id_barang 
+			  and p.no_spb=l.no_spb and l.id_barang ='$lst' and m.nmbarang=l.id_barang and nmgroup='$grp'";
+		//echo $sql;
+		$q=$this->db->query($sql);
 		return $q;
 	}
 }

@@ -30,8 +30,7 @@ panel_end();
 <script language="javascript">
 	$(document).ready(function(e) {
 		$('#print').click(function(){
-			alert("test");
 			document.location.href='<?=base_url();?>index.php/master/print_label';
-		})
+		})/**/
     });
 </script>

@@ -5,7 +5,8 @@ class Master extends CI_Controller {
 		parent::__construct();
 		$this->load->model('Admin_model');
 		$this->load->model('Master_model');
-		//$this->load->library('_fpdf');
+		$this->load->library('zetro_slip');
+		$this->load->library('zetro_pdf');
 		$this->tc= new zetro_table_creator('asset/bin/zetro_table.cfg');
 		$this->zn= new zetro_manager();
 		$this->zc='asset/bin/zetro_config.dll';
@@ -124,14 +125,15 @@ class Master extends CI_Controller {
 		$data=array();$datax=array();
 		$kolom=2;
 		$n=0;
+		$grp=$this->Admin_model->show_single_field("material","nmgroup","where nmbarang='".$_POST['str']."'");
 		$data=$this->Master_model->db_list();
 		if($data->num_rows>0){
 			foreach($data->result_array() as $row){
-				$datax=$this->Master_model->db_list_reprint($_POST['str'],$row['nmgroup']);
-				$n++;
 				//print_r($data);
 				echo "<tr valign='middle' class='xx header' id='".$row['nmgroup']."'>";
 				echo "<td class='kotak' colspan='4'>".$row['nmgroup']."</td>";
+				$datax=$this->Master_model->db_list_reprint($_POST['str'],$row['nmgroup']);
+				$n++;
 				if($datax->num_rows>0){
 					foreach($datax->result_array() as $dbs){
 						  echo "<tr class='xx ".$row['nmgroup']."'>
@@ -148,10 +150,52 @@ class Master extends CI_Controller {
 		}
 	}
 	function print_label(){
-		$data=array();
+		$data=array();$datax=array();
 		$kolom=2;
-		$n=0;
-		$data['list']=$this->Admin_model->show_list('labeling',"where pp_stat='Y' order by no_spb");
-		$this->load->view('master/print_label',$data);
+		$n=0;$nn=0;
+		$datax['list']=$this->Admin_model->show_list('labeling',"where pp_stat='Y' order by no_spb");
+		$data=$this->Admin_model->show_list('labeling',"where pp_stat='Y' order by no_spb");
+		//print_r($data->result_array());
+		foreach($data->result_array() as $row){
+			$nama_spb='';$no_spb='';$jw='';$jt_tmpo='';$nilai_spb='';$barang='';
+			$nama_spb=substr(rdb('spb','nama_spb','nama_spb',"where no_spb='".$row['no_spb']."'"),0,10);
+			$no_spb=substr($row['no_spb'],0,5);
+			$jw=$row['jw_spb'];
+			$jt_tmpo=tglfromSql($row['jt_spb']);
+			$nilai_spb=number_format($row['nilai_spb'],0);
+			$barang=$row['id_barang'];
+				$datane=array($nama_spb,$no_spb,$jw,$jt_tmpo,$nilai_spb,$barang);
+			$this->print_slip($n,$datane);				  
+			$n++;
+			$this->Admin_model->upd_data("labeling","set pp_stat='P'","where no_spb='".$row['no_spb']."'");
+	}
+			($n>1)?
+			$z=(($n)%($n/2)):$z='';
+			($z==1|| $z='')?$zz=1:$zz=0;
+		$this->print_slip(($n+$zz),'');
+		$this->print_slip(($n+$zz+1),'');
+		
+		$this->load->view('master/print_label',$datax);
+	}
+	function print_slip($nomor,$data){
+		$this->zetro_slip->path=$nomor;
+		$this->zetro_slip->modes('wb');
+		//$this->zetro_slip->newline();
+		$this->zetro_slip->content($this->isi_slip($nomor,$data));
+		$this->zetro_slip->create_file(false);	
+	}
+	function isi_slip($nomor,$data=''){
+		$tab=1;$brsbaru=" \r\n";
+		if($data!=''){
+		$isine=array(str_repeat(' ',$tab)."NAMA". str_repeat(' ',11).": ".$data[0].$brsbaru,
+					 str_repeat(' ',$tab)."NO.SPB". str_repeat(' ',9).": ".$data[1].$brsbaru,
+					 str_repeat(' ',$tab)."JK.WAKTU". str_repeat(' ',2).": ".$data[2].$brsbaru,
+					 str_repeat(' ',$tab)."JT.TEMPO". str_repeat(' ',3).": ".$data[3].$brsbaru,
+					 str_repeat(' ',$tab)."Rp.". str_repeat(' ',17).": ".$data[4].$brsbaru,
+					 str_repeat(' ',$tab).$data[5]);
+		}else{
+			$isine=array(' ',' ');
+		}
+	 return $isine;
 	}
 }

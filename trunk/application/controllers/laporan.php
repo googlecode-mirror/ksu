@@ -9,6 +9,7 @@ class Laporan extends CI_Controller {
         parent::__construct();
         $this->load->model('Admin_model');
         $this->load->model('lap_model');
+        $this->load->model('spb_model');
 		$this->tc= new zetro_table_creator('asset/bin/zetro_table.cfg');
 		$this->zn= new zetro_manager();
 		$this->zc='asset/bin/zetro_config.dll';
