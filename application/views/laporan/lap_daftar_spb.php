@@ -79,18 +79,7 @@ popup_end('');
 	$(document).ready(function(e) {
         $('#bulan').html("<? dropdown('spb','distinct(month(tgl_spb)) as bln','','order by month(tgl_spb)',$blne);?>");
         $('#thn').html("<? dropdown('spb','distinct(year(tgl_spb)) as thn','','order by year(tgl_spb)',$thne);?>");
-	    $('#id_barang').html("<? dropdown('material','nmbarang','nmbarang',"order by nmbarang");?>");
-		
-		$('#printing').click(function(){
-			var id=$('#yngaktif').val();
-			var nm;
-			(id=='daftarspb')?nm='print_lap_spb':nm='print_lap_spb_ex';
-			$('table#'+nm).attr('border','1');
-			var bln=$('#bulan').val();
-			var thn=$('#thn').val();
-			document.location.href='<?=site_url();?>/report/'+nm+'/'+bln+'-'+thn;
-		})
-
+	    //$('#id_barang').html("<? dropdown('material','nmbarang','nmbarang',"order by nmbarang");?>");
     });
 </script>
 <input type='hidden' id='prs' value='' />

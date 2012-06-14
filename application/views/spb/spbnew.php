@@ -21,7 +21,7 @@ $(document).ready(function(e) {
 	(bln.length==0)? xx='0'+bln:xx=bln;
  	$('#no_spb').val('<?=$no_spb;?>/SPB/'+xx+'/'+today.getFullYear());
    $('#nama_spb').focus().select();
-   $('#id_barang').html("<? dropdown('material','nmbarang','nmbarang',"order by nmbarang");?>");
+   //$('#id_barang').html("<? dropdown('material','nmbarang','nmbarang','order by nmbarang');?>");
 });
 </script>
 <span id='addlevel' style=" display:none; "><input type="button" id='addlvl' value='+' title='Tambah Jenis Barang' /></span>

@@ -1,6 +1,1 @@
- NAMA           : KERJ 
- NO.SPB         : 00014 
- JK.WAKTU  : 30 
- JT.TEMPO   : 11/07/2012 
- Rp.                 : 220,000 
- CELANA PANJANG
+  

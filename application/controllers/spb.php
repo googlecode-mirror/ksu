@@ -72,6 +72,17 @@ class Spb extends CI_Controller {
 		echo "</ul>";
 		}
 	}
+	function find_mat(){
+		$str=addslashes($_POST['str']);
+		$datax=$this->Admin_model->find_match($str,"material","nmbarang");
+		if($datax->num_rows>0){
+		echo "<ul>";
+			foreach ($datax->result_array() as $lst){
+				echo '<li onclick="suggest_click(\''.$lst['nmbarang'].'\',\'id_barang\');">'.$lst['nmbarang']."</li>";
+			}
+		echo "</ul>";
+		}
+	}
 	function nospb_suggested(){
 		$str=addslashes($_POST['str']);
 		$datax=$this->Admin_model->find_match_spb($str,"spb","no_spb");
@@ -89,34 +100,36 @@ class Spb extends CI_Controller {
 		$data=$this->Admin_model->show_single_field("nasabah","ktp_spb","where nama_spb='".$nsbh."'");	
 		echo $data;
 	}
-	function cek_blacklist(){
-		$ktp_spb=$_POST['ktp_spb'];
-		$data=$this->Admin_model->field_exists('blacklist',"where ktp_spb='$ktp_spb'",'ktp_spb');
-		echo ($data=='')? '':"No. KTP tersebut masuk dalam daftar blacklist\nSilahkan cek di menu Nasabah Blacklist";
-	}
 	function cek_ktp(){
 		$data=array();
 		$nama_spb=$_POST['nama_spb'];
 		$ktp_spb=$_POST['ktp_spb'];
 		$ktp_spb_s=$this->Admin_model->show_single_field("nasabah","ktp_spb","where ktp_spb='".$ktp_spb."'");	
 		$nama_spb_s=$this->Admin_model->show_single_field("nasabah","nama_spb","where ktp_spb='".$ktp_spb."'");	
-		($ktp_spb==$ktp_spb_s)?	$stat=1:$stat=0;
+		($ktp_spb==$ktp_spb_s && $nama_spb!=$nama_spb_s)?	$stat=1:$stat=0;
 	     $data['stat']=$stat;
 		 $data['nama_spb']=$nama_spb_s;
 		 echo json_encode($data);
 	}
+
+	function cek_blacklist(){
+		$ktp_spb=$_POST['ktp_spb'];
+		$data=$this->Admin_model->field_exists('blacklist',"where ktp_spb='$ktp_spb'",'ktp_spb');
+		echo ($data=='')? '':"No. KTP tersebut masuk dalam daftar blacklist\nSilahkan cek di menu Nasabah Blacklist";
+	}
 	function simpan_spb(){
 		$datax=array();
 		//simpan spb
+		$this->get_data_field('Spb','spb');
 		//cek data nasabah jika belum ada simpan di db nasabah
 		if($this->Admin_model->show_single_field("nasabah","nama_spb","where nama_spb='".$this->input->post('nama_spb')."'")==''){
 		$this->get_data_field('nasabah','nasabah');}
+		$this->Admin_model->upd_data('material',"set nmbarang='".$this->input->post('id_barang')."'","where nmbarang='".$this->input->post('id_barang')."'");
 		//update nomor spb catat di table nomorspb
 		$nomor=explode('/',$this->input->post('no_spb'));
 		$datax['no_spb']=(int)$nomor[0];
 		$datax["created_by"]=$this->session->userdata("userid");
 		$this->Admin_model->update_nomor($datax,'nomorspb');
-		$this->get_data_field('Spb','spb');
 		$this->print_slip();
 	}
 	function redir(){

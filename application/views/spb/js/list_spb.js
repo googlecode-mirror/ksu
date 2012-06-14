@@ -5,6 +5,7 @@ Created Date :22/05/2012
 Function : jQuery List SPB
 */
 $(document).ready(function(e) {
+	lock('#no_spb')
 	$('img.del').hide();
     $('img').click(function(){
 	  var id=$(this).attr('id');
@@ -13,19 +14,19 @@ $(document).ready(function(e) {
 	  $('#lvladd').css({'top':'15%','left':'25%','background-color':'#CCC'});
 	  $('#no_spb').val(id);
 	  $.post('spb_edit',{'no_spb':id},
-	  function(result){
-		  var obj=$.parseJSON(result);
-		  $('#tgl_spb').val(obj.tgl_spb);
-		  $('#nama_spb').val(obj.nama_spb);
-		  $('#ktp_spb').val(obj.ktp_spb);
-		  $('#id_barang').val(obj.id_barang).select();
-		  $('#taksir_spb').val(obj.taksir_spb);
-		  $('#nilai_spb').val(obj.nilai_spb);
-		  $('#jw_spb').val(obj.jw_spb).select();
-		  $('#jt_spb').val(obj.jt_spb);
-	  });
-	  $('#lvladd').show('slow');
-	  $('div#lock').show();
+		  function(result){
+			  var obj=$.parseJSON(result);
+			  $('#tgl_spb').val(obj.tgl_spb);
+			  $('#nama_spb').val(obj.nama_spb);
+			  $('#ktp_spb').val(obj.ktp_spb);
+			  $('#id_barang').val(obj.id_barang).select();
+			  $('#taksir_spb').val(obj.taksir_spb);
+			  $('#nilai_spb').val(obj.nilai_spb);
+			  $('#jw_spb').val(obj.jw_spb).select();
+			  $('#jt_spb').val(obj.jt_spb);
+		  });
+		  $('#lvladd').show('slow');
+		  $('div#lock').show();
 	  }
 	})
 	$('#close').click(function(){

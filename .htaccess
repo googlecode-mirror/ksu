@@ -1,3 +1,4 @@
+Allow from all
 RewriteEngine On
 
 # Put your installation directory here:
@@ -12,4 +13,4 @@ RewriteCond %{REQUEST_FILENAME} !-d
 
 # For reuests that are not actual files or directories,
 # Rewrite to index.php/URL
-RewriteRule ^(.*)$ index.php/$1 [PT,L]  
+RewriteRule ^(.*)$ index.php/$1 [PT,L]

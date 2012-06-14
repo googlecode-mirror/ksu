@@ -1,6 +1,1 @@
- NAMA           : BARSATA 
- NO.SPB         : 00013 
- JK.WAKTU  : 30 
- JT.TEMPO   : 11/07/2012 
- Rp.                 : 286,000 
- HP NOKIA C3
+  

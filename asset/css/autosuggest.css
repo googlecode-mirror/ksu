@@ -12,6 +12,8 @@
   width:200px;
   left:0px;
   top:0px;
+  max-height:250px;
+  overflow:auto;
   z-index:10000;
   background-color:#FC0;
   -webkit-border-top-right-radius:8px;

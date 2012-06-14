@@ -1,7 +1,7 @@
 [Server]
 hostname|localhost
 username|root
-password|
+password|purnama
 dbname|ksudb
 
 [WebPage]
