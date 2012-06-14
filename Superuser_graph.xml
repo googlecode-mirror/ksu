@@ -1,7 +1,0 @@
-<graph caption='Grafik Nilai Barang Tahun :2012' xAxisName='Bulan' yAxisName='Rupiah' numberPrefix='' showvalues='1'  numDivLines='4' formatNumberScale='0' decimalPrecision='0' anchorSides='10' anchorRadius='3' anchorBorderColor='00990'>
-<set name='2' value='250000'/>
-<set name='3' value='500000'/>
-<set name='4' value='650000'/>
-<set name='5' value='6500000'/>
-<set name='6' value='700000'/>
-</graph>
