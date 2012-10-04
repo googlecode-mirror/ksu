@@ -155,6 +155,7 @@ $(document).ready(function(e) {
 		alert('No. KTP Harus di isi terlebih dahulu');
 		}
 	})
+	
 	$('#print_ulang').click(function(){
 		if (confirm('Apakah printer sudah siap?')){
 			$.post('print_slip',{
